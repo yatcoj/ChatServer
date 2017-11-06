@@ -38,7 +38,8 @@ public class MainWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() 
+	{
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 457, 354);
@@ -82,8 +83,10 @@ public class MainWindow {
 
 		JButton btnNewButton = new JButton("Send");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
 				sendButtonEvent(txtrDDD, textArea);
 			}
 		});

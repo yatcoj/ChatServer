@@ -31,9 +31,13 @@ public class Client
 			Thread thr = new Thread(wt);
 			thr.start();
 			sendMessage("");
-		} catch (UnknownHostException e) {
+		} 
+		catch (UnknownHostException e) 
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +47,8 @@ public class Client
 		try
 		{
 			out.writeUTF(userName + "@"+message);
-		} catch(IOException e)
+		}
+		catch(IOException e)
 		{
 		}
 	}
@@ -62,7 +67,8 @@ class ServerInput implements Runnable
 	public void run()
 	{
 		BufferedReader in = null;
-		try {
+		try 
+		{
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			while(true)
 			{
@@ -70,7 +76,9 @@ class ServerInput implements Runnable
 				String[] str = getName(text);
 				removeFrom.setText(removeFrom.getText()+("\n" + str[0] +": "+ str[1]));
 			}
-		} catch (IOException e1) {
+		}
+		catch (IOException e1) 
+		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

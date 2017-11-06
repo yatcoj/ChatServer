@@ -12,20 +12,27 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 
 
-public class AskClient {
+public class AskClient 
+{
 
 	private JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void main(String[] args) 
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
 					AskClient window = new AskClient();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
+				} 
+				catch (Exception e) 
+				{
 					e.printStackTrace();
 				}
 			}
@@ -35,22 +42,26 @@ public class AskClient {
 	/**
 	 * Create the application.
 	 */
-	public AskClient() {
+	public AskClient()
+	{
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize()
+	{
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 181, 126);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JButton btnNewButton = new JButton("Client");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
 				
 				MainWindow main = new MainWindow();
 				frame.setVisible(false);
@@ -58,8 +69,10 @@ public class AskClient {
 		});
 		
 		JButton btnNewButton_1 = new JButton("Server");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton_1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
 				int port = 1111;
 				Server serv = new Server(port);
 				frame.setVisible(false);

@@ -17,7 +17,8 @@ public class Server
 	public Server(int port)
 	{
 		this.port = port;
-		try {
+		try 
+		{
 			socket = new ServerSocket(port);
 			Socket clients = null;
 			System.out.println("Waiting for clients to Connect!)");
@@ -31,7 +32,9 @@ public class Server
 				clientList.add(clientCount, ch);
 				ch.updateClientList(clientList);
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -45,7 +48,8 @@ class ClientHandler implements Runnable
 	int clientID;
 	ArrayList<ClientHandler> clientList;
 	
-	public ClientHandler(Socket clients, int clientCount) {
+	public ClientHandler(Socket clients, int clientCount) 
+	{
 		this.client = clients;
 		this.clientID = clientCount;
 	}
