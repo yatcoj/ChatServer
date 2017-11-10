@@ -36,13 +36,6 @@ public class Encryption
 			}
 		}
 		
-		for(int i = 0; i < encM.length(); i++)
-		{
-			if(i%2 ==0)
-			{
-				
-			}
-		}
 		return encM;
 	}
 	
