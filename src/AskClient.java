@@ -1,4 +1,3 @@
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,7 +10,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-//merge test1
+//i wanntasdaetghou ajfor
+
+//merging the bunch
+
+//BRIANNNNNNNNNN
+
+//Ass Client
 public class AskClient 
 {
 
@@ -109,6 +114,4 @@ public class AskClient
 		);
 		frmMenu.getContentPane().setLayout(groupLayout);
 	}
-
->>>>>>> branch 'master' of https://github.com/yatcoj/ChatServer.git
 }
