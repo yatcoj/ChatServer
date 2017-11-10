@@ -11,7 +11,7 @@ public class mainMenuController
 	{
 		try
 		{
-			Parent root = FXMLLoader.load(getClass().getResource("Test.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("ClientStuff.fxml"));
 			Stage stage = new Stage();
 			stage.setTitle("Client");
 			Scene scene = new Scene(root, 400, 400);

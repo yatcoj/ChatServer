@@ -10,13 +10,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-//i wanntasdaetghou ajfor
 
-//merging the bunch
 
-//BRIANNNNNNNNNN
-
-//Ass Client
 public class AskClient 
 {
 
