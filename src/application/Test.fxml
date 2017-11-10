@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
+   <children>
+      <Pane fx:id="paneMenu" prefHeight="200.0" prefWidth="400.0">
+         <children>
+            <Button fx:id="btnClient" layoutX="65.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnClientClicked" text="Client" />
+            <Button fx:id="btnServer" layoutX="270.0" layoutY="100.0" mnemonicParsing="false" onAction="#btnServerClicked" text="Server" />
+            <Label fx:id="lblLaunch" layoutX="176.0" layoutY="50.0" text="Launch" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
