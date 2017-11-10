@@ -25,7 +25,16 @@ public class Encryption
 			jumbChar += allChar.toCharArray()[ri];
 		}
 		
-		for(message)
+		for(int i = 0; i < message.length(); i++)
+		{
+			for(int j = 0; j < jumbChar.length(); j++)
+			{
+				if(message.toCharArray()[i] == allChar.toCharArray()[j])
+				{
+					encM += jumbChar.toCharArray()[j];
+				}
+			}
+		}
 					
 		return encM;
 	}
@@ -43,6 +52,7 @@ public class Encryption
 	//For testing, remove after finished
 	public static void main(String[] args) 
 	{
-		String b = encrypt("a");
+		String b = encrypt("abcdefghijklmnopqrstuvwxyz");
+		System.out.println(b);
 	}
 }
