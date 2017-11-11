@@ -3,27 +3,20 @@ package encrypt;
 import java.util.Random;
 
 /*
- * To Do
- * Encrypt messages
- * 
- * Decrypt messages
+ *Finished with the Encryption. To use just create a new object Encryption and call .encrypt(message) or .decrypt(message)
  * 
  * */
 public class Encryption 
 {
+	public static String allChar = "abcdefghijklmnopqrstuvwxyz1234567890`-=~_+!@#$%^&*()[]\\;',./{}|:\"<>? 	ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	public static String encrypt(String message)
 	{
 		String encM = "";
-		String allChar = "abcdefghijklmnopqrstuvwxyz1234567890`-=~_+!@#$%^&*()[]\\;',./{}|:\"<>? 	ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String jumbChar = "";
 
 		Random r = new Random(allChar.length());
-				
-		for(int i = 0; i < allChar.length(); i++)
-		{
-			int ri = r.nextInt(allChar.length());
-			jumbChar += allChar.toCharArray()[ri];
-		}
+		jumbChar = jumbleText(allChar, r);
+		
 		
 		for(int i = 0; i < message.length(); i++)
 		{
@@ -44,16 +37,11 @@ public class Encryption
 	{
 		String decMH = "";
 		String decM = "";
-		String allChar = "abcdefghijklmnopqrstuvwxyz1234567890`-=~_+!@#$%^&*()[]\\;',./{}|:\"<>? 	ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String jumbChar = "";
 
 		Random r = new Random(allChar.length());
 		//makes the encoded text
-		for(int i = 0; i < allChar.length(); i++)
-		{
-			int ri = r.nextInt(allChar.length());
-			jumbChar += allChar.toCharArray()[ri];
-		}
+		jumbChar = jumbleText(allChar, r);
 		
 		//Removes the trash numbers
 		for(int i = 0; i < message.length(); i++)
@@ -78,13 +66,27 @@ public class Encryption
 		return decM;
 	}
 	
-	
-	//For testing, remove after finished
-	public static void main(String[] args) 
+	private static String jumbleText(String allChar, Random r)
 	{
-		String b = encrypt("abcdefghijklmnopqrstuvwxyz");
-		String c = decrypt(b);
-		System.out.println(b);
-		System.out.println(c);
+		String jumbChar = "";
+		String allCharT = allChar;
+				
+		for(int i = 0; i < allChar.length(); i++)
+		{
+			int ri = r.nextInt(allCharT.length());
+			jumbChar += allCharT.toCharArray()[ri];
+			String temp = "";
+			for(int j = 0; j < allCharT.length(); j++)
+			{
+				if(j != ri)
+				{
+					temp += allCharT.charAt(j);
+				}
+			}
+			allCharT = temp;
+		}
+		
+		return jumbChar;
 	}
+	
 }
