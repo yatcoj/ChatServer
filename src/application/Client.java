@@ -59,9 +59,9 @@ class ServerInput implements Runnable
 {
 	Socket socket;
 	TextArea removeFrom;
-	public ServerInput(Socket socket,TextArea removeFrom) 
+	public ServerInput(Socket socket,TextArea removeFrom2) 
 	{
-		this.removeFrom = removeFrom;
+		this.removeFrom = removeFrom2;
 		this.socket = socket;
 	}
 	
