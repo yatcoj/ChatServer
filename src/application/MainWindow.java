@@ -94,7 +94,7 @@ public class MainWindow {
 		
 		btnNewButton.setBounds(345, 230, 106, 95);
 		desktopPane.add(btnNewButton);
-		
+
 		String name = "Ushrark";
 		cl = new Client("localhost", 1111, txtrDDD, name);
 	}
