@@ -26,6 +26,9 @@ public class mainMenuController
 		{
 			e.printStackTrace();
 		}
+
+		String name = "Ushrark";
+		Client cl = new Client("localhost", 1111, txtOutput, name);
 	}
 	
 	public void btnServerClicked()

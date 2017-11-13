@@ -96,7 +96,7 @@ public class MainWindow {
 		desktopPane.add(btnNewButton);
 
 		String name = "Ushrark";
-		cl = new Client("localhost", 1111, txtrDDD, name);
+		//cl = new Client("localhost", 1111, txtrDDD, name);
 	}
 	
 	public void sendButtonEvent(JTextArea removeFrom, JTextArea sendTo)

@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 
 import javax.swing.JTextArea;
 
+import javafx.scene.control.TextArea;
+
 public class Client 
 {
 	DataOutputStream out;
@@ -18,7 +20,7 @@ public class Client
 	String userName;
 	Boolean flag = true;
 	
-	public Client(String ip, int port, JTextArea removeFrom, String userName)
+	public Client(String ip, int port, TextArea removeFrom, String userName)
 	{
 		this.serverIp = ip;
 		this.port = port;
@@ -58,10 +60,10 @@ public class Client
 class ServerInput implements Runnable
 {
 	Socket socket;
-	JTextArea removeFrom;
-	public ServerInput(Socket socket,JTextArea removeFrom) 
+	TextArea removeFrom;
+	public ServerInput(Socket socket,TextArea removeFrom2) 
 	{
-		this.removeFrom = removeFrom;
+		this.removeFrom = removeFrom2;
 		this.socket = socket;
 	}
 	
