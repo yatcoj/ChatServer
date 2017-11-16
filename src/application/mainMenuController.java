@@ -3,6 +3,7 @@ package application;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ public class mainMenuController
 	@FXML private Button btnSend;
 	
 	private clientSendRec c1;
-	int i = 0;
+	static int i = 0;
 	
 	public void btnClientClicked() throws UnknownHostException, IOException 
 	{
@@ -46,20 +47,9 @@ public class mainMenuController
 		Server serv = new Server(port);
 	}
 
-	public void btnSendAct() throws UnknownHostException, IOException 
+	public void btnSendAct()
 	{
-//		if(i ==0)
-//		{
-//			c1 = new clientSendRec("localhost", 1111, txtOutput, "Person", txtInput);
-//			System.out.println("Here?");
-//			i++;
-//		}
-		
-		System.out.println(txtInput.getText());
-		//System.out.println(c1.userName+ " ekhewvfk");
 		String text = txtInput.getText();
-		//System.out.println(text);
-		//txtOutput.setText(txtInput.getText());
 		if(!text.equals(""))
 		{
 			c1.sendMessage(text);
@@ -69,7 +59,8 @@ public class mainMenuController
 	
 	public void btnCon() throws UnknownHostException, IOException 
 	{
-		c1 = new clientSendRec("localhost", 1111, txtOutput, "Person", txtInput);
+		c1 = new clientSendRec("localhost", 1111, txtOutput, "Person" + i, txtInput);
+		i++;
 	}
 	
 	public TextArea getTextArea()

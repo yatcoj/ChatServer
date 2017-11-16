@@ -13,16 +13,15 @@ import java.util.List;
 
 public class Server 
 {
-	ServerSocket socket;
 	static int clientCount = 0;
 	int maxClients = 5;
-	static ArrayList<ClientHandler> clientList = new ArrayList<ClientHandler>();
+	public static ArrayList<ClientHandler> clientList = new ArrayList<ClientHandler>();
 	
 	public Server(int port)
 	{
 		try 
 		{
-			socket = new ServerSocket(port);
+			ServerSocket socket = new ServerSocket(port);
 			Socket clients = null;
 			System.out.println("Waiting for clients to Connect!)");
 			while(true)
@@ -33,18 +32,19 @@ public class Server
 				//Create client handler
 				System.out.println("A client has Connected: " + clients);
 				
-				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clients.getInputStream()));
+				//BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clients.getInputStream()));
+				DataInputStream inFromClient = new DataInputStream(clients.getInputStream());
 				DataOutputStream outToClient = new DataOutputStream(clients.getOutputStream());
 				
 				ClientHandler ch = new ClientHandler(clients, clientCount, inFromClient, outToClient);
 				
 				
 				//add client to list
-				clientList.add(clientCount, ch);
-				ch.updateClientList(clientList);
+				clientList.add(ch);
 				
 				//start new thread
-				new Thread(ch).start();
+				Thread t = new Thread(ch);
+				t.start();
 				
 				//increment client count
 				clientCount++;
@@ -59,14 +59,13 @@ public class Server
 
 class ClientHandler implements Runnable 
 {
-	Socket client;
-	String name;
-	int clientID;
-	final BufferedReader in;
-	final DataOutputStream out;
-	ArrayList<ClientHandler> clientList;
+	private Socket client;
+	private String name;
+	private int clientID;
+	private final DataInputStream in;
+	private final DataOutputStream out;
 	
-	public ClientHandler(Socket clients, int clientCount, BufferedReader read, DataOutputStream send) 
+	public ClientHandler(Socket clients, int clientCount, DataInputStream read, DataOutputStream send) 
 	{
 		this.client = clients;
 		this.clientID = clientCount;
@@ -77,50 +76,23 @@ class ClientHandler implements Runnable
 	@Override
 	public void run() 
 	{
-		Boolean flag = true;
-		Boolean firstRun = true;
 		try
 		{    	
-			while(flag)
+			while(true)
 	        {
+				String msg = in.readUTF();
+				System.out.println(msg);
 				
-				out.writeBytes(in.readLine());
-				System.out.println(in.readLine());
-				//PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-	            //DataInputStream is = new DataInputStream(client.getInputStream());
-	            //String input = is.readUTF();
-//	            if(firstRun)
-//	            {
-//	            	firstRun = false;
-//	            	name = input;
-//	            	input = name + "Connected!";
-//	            }
-//	            out.println(input);
-//	            System.out.println("Client " + name + ": "+ input.toUpperCase());
+				for(ClientHandler all: Server.clientList)
+				{
+					all.out.writeUTF(msg);
+				}
 	        }
-			client.close();
 	    }
 	    catch(IOException e)
 	    {
 	        e.printStackTrace();
 	    }
-	}
-	
-	private ClientHandler findUsername(String userName)
-	{
-		for(int i = 0; i < clientList.size()-1; i++) 
-		{
-			if(clientList.get(i).getName().equals(userName))
-			{
-				return clientList.get(i);
-			}
-		}
-		return null;
-	}
-	
-	public void updateClientList(ArrayList<ClientHandler> clientList)
-	{
-		this.clientList = clientList;
 	}
 	
 	public String getName()

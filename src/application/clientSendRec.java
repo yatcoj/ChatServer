@@ -2,19 +2,18 @@ package application;
 
 import java.io.*;
 import java.net.*;
-import java.util.Scanner;
 
 import javafx.scene.control.TextArea;
 
 public class clientSendRec
 {
 	static int ServerPort;
-	DataOutputStream out;
-	DataInputStream in;
-	String serverIp;
+	private final DataOutputStream out;
+	private final DataInputStream in;
+	private String serverIp;
 	int port;
-	String userName;
-	Boolean flag = true;
+	private String userName;
+	
 	public clientSendRec(String ip, int port, TextArea txtOut, String user, TextArea txtIn) throws UnknownHostException, IOException 
 	{		
 		ServerPort = port;
@@ -28,52 +27,28 @@ public class clientSendRec
 		in = new DataInputStream(socket.getInputStream());
 		out = new DataOutputStream(socket.getOutputStream());
 		
-//		//actively look to send new message
-//		Thread sendMessage = new Thread(new Runnable() 
-//		{
-//			@Override
-//			public void run() 
-//			{
-//				while (true) 
-//				{
-//					// read the message to deliver.
-//					String msg = txtIn.getText();
-//					try 
-//					{
-//						// write on the output stream
-//						out.writeUTF(msg);
-//					}
-//					catch (IOException e)
-//					{
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		});
-		 
 		// readMessage thread
 		Thread readMessage = new Thread(new Runnable() 
 		{
 			@Override
 			public void run() 
 			{
-				while (true)
+				try 
 				{
-					try 
+					while (true)
 					{
 						// read the message sent to this client
 						String msg = in.readUTF();
-						txtOut.setText(msg);
-						System.out.println(msg);
+						txtOut.appendText("\n"+msg);
 					} 
-					catch (IOException e)
-					{
-						e.printStackTrace();
-					}
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
 				}
 			}
 		});
-//		sendMessage.start();
+		
 		readMessage.start();
 	}
 	
