@@ -74,6 +74,7 @@ class ClientHandler implements Runnable
 		this.out = send;
 	}
 
+	@Override
 	public void run() 
 	{
 		Boolean flag = true;
@@ -84,6 +85,7 @@ class ClientHandler implements Runnable
 	        {
 				
 				out.writeBytes(in.readLine());
+				System.out.println(in.readLine());
 				//PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 	            //DataInputStream is = new DataInputStream(client.getInputStream());
 	            //String input = is.readUTF();
