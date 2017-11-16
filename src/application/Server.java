@@ -1,6 +1,9 @@
 package application;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,14 +13,13 @@ import java.util.List;
 
 public class Server 
 {
-	int port;
 	ServerSocket socket;
-	int clientCount = 0;
-	int maxClients = 100;
-	ArrayList<ClientHandler> clientList = new ArrayList<ClientHandler>();
+	static int clientCount = 0;
+	int maxClients = 5;
+	static ArrayList<ClientHandler> clientList = new ArrayList<ClientHandler>();
+	
 	public Server(int port)
 	{
-		this.port = port;
 		try 
 		{
 			socket = new ServerSocket(port);
@@ -25,13 +27,27 @@ public class Server
 			System.out.println("Waiting for clients to Connect!)");
 			while(true)
 			{
+				//Accept incoming request to connect to server
 				clients = socket.accept();
-				System.out.println("A client has Connected!");
-				clientCount++;
-				ClientHandler ch = new ClientHandler(clients, clientCount);
-				new Thread(ch).start();
+				
+				//Create client handler
+				System.out.println("A client has Connected: " + clients);
+				
+				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clients.getInputStream()));
+				DataOutputStream outToClient = new DataOutputStream(clients.getOutputStream());
+				
+				ClientHandler ch = new ClientHandler(clients, clientCount, inFromClient, outToClient);
+				
+				
+				//add client to list
 				clientList.add(clientCount, ch);
 				ch.updateClientList(clientList);
+				
+				//start new thread
+				new Thread(ch).start();
+				
+				//increment client count
+				clientCount++;
 			}
 		}
 		catch (IOException e)
@@ -46,12 +62,16 @@ class ClientHandler implements Runnable
 	Socket client;
 	String name;
 	int clientID;
+	final BufferedReader in;
+	final DataOutputStream out;
 	ArrayList<ClientHandler> clientList;
 	
-	public ClientHandler(Socket clients, int clientCount) 
+	public ClientHandler(Socket clients, int clientCount, BufferedReader read, DataOutputStream send) 
 	{
 		this.client = clients;
 		this.clientID = clientCount;
+		this.in = read;
+		this.out = send;
 	}
 
 	public void run() 
@@ -62,17 +82,19 @@ class ClientHandler implements Runnable
 		{    	
 			while(flag)
 	        {
-				PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-	            DataInputStream is = new DataInputStream(client.getInputStream());
-	            String input = is.readUTF();
-	            if(firstRun)
-	            {
-	            	firstRun = false;
-	            	name = input;
-	            	input = name + "Connected!";
-	            }
-	            out.println(input);
-	            System.out.println("Client " + name + ": "+ input.toUpperCase());
+				
+				out.writeBytes(in.readLine());
+				//PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+	            //DataInputStream is = new DataInputStream(client.getInputStream());
+	            //String input = is.readUTF();
+//	            if(firstRun)
+//	            {
+//	            	firstRun = false;
+//	            	name = input;
+//	            	input = name + "Connected!";
+//	            }
+//	            out.println(input);
+//	            System.out.println("Client " + name + ": "+ input.toUpperCase());
 	        }
 			client.close();
 	    }

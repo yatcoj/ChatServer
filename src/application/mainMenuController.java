@@ -1,5 +1,7 @@
 package application;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,10 +13,10 @@ import javafx.stage.Stage;
 public class mainMenuController 
 {
 	
-	@FXML TextArea txtOutput;
-	@FXML TextArea txtInput;
-	@FXML Button btnSend;
-	Client c1;
+	@FXML private TextArea txtOutput;
+	@FXML private TextArea txtInput;
+	@FXML private Button btnSend;
+	private clientSendRec c1;
 	
 	public void btnClientClicked()
 	{
@@ -27,7 +29,16 @@ public class mainMenuController
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
-			c1 = new Client("localhost", 1111, txtOutput, "Person");
+			c1 = new clientSendRec("localhost", 1111, txtOutput, "Person", txtInput);
+			btnSend.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent E)
+				{
+					System.out.println(c1.userName + " shgiues");
+				}
+			});
+			
+			System.out.println(c1.userName+ " ekhewvfk");
 		} 
 		catch(Exception e)
 		{
@@ -43,11 +54,19 @@ public class mainMenuController
 
 	public void btnSendAct()
 	{
+		System.out.println(txtInput.getText());
+		System.out.println(c1.userName+ " ekhewvfk");
 		String text = txtInput.getText();
-		txtOutput.setText("");
+		System.out.println(text);
+		//txtOutput.setText("");
 		if(!text.equals(""))
 		{
 			c1.sendMessage(text);
 		}
+	}
+	
+	public TextArea getTextArea()
+	{
+		return txtOutput;
 	}
 }

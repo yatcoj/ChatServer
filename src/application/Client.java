@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 public class Client 
-{
+{	
 	DataOutputStream out;
 	BufferedReader in;
 	String serverIp;
@@ -18,7 +18,7 @@ public class Client
 	String userName;
 	Boolean flag = true;
 	
-	public Client(String ip, int port, TextArea removeFrom, String userName)
+	public Client(String ip, int port, TextArea txtOut, String userName, TextArea txtIn)
 	{
 		this.serverIp = ip;
 		this.port = port;
@@ -28,7 +28,7 @@ public class Client
 			Socket socket = new Socket(this.serverIp, this.port);
 			out = new DataOutputStream(socket.getOutputStream());
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			ServerInput wt = new ServerInput(socket, removeFrom);
+			ServerInput wt = new ServerInput(socket, txtOut, txtIn);
 			Thread thr = new Thread(wt);
 			thr.start();
 			sendMessage("");
@@ -58,11 +58,13 @@ public class Client
 class ServerInput implements Runnable
 {
 	Socket socket;
-	TextArea removeFrom;
-	public ServerInput(Socket socket,TextArea removeFrom2) 
+	TextArea txtOut;
+	TextArea txtIn;
+	public ServerInput(Socket socket,TextArea txtOut1, TextArea txtIn1) 
 	{
-		this.removeFrom = removeFrom2;
+		this.txtOut= txtOut1;
 		this.socket = socket;
+		this.txtIn = txtIn1;
 	}
 	
 	public void run()
@@ -75,7 +77,7 @@ class ServerInput implements Runnable
 			{
 				String text = in.readLine();
 				String[] str = getName(text);
-				removeFrom.setText(removeFrom.getText()+("\n" + str[0] +": "+ str[1]));
+				txtOut.setText(txtIn.getText()+("\n" + str[0] +": "+ str[1]));
 			}
 		}
 		catch (IOException e1) 
