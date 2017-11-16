@@ -30,13 +30,6 @@ public class mainMenuController
 			stage.setScene(scene);
 			stage.show();
 			c1 = new clientSendRec("localhost", 1111, txtOutput, "Person", txtInput);
-			btnSend.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent E)
-				{
-					System.out.println(c1.userName + " shgiues");
-				}
-			});
 			
 			System.out.println(c1.userName+ " ekhewvfk");
 		} 
