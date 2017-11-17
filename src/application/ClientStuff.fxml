@@ -5,11 +5,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
+<AnchorPane fx:id="ancChat" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
    <children>
-      <Button fx:id="btnSend" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="75.0" prefWidth="150.0" text="Send" />
-      <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
-      <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="249.0" prefWidth="400.0" />
-      <Button fx:id="btnConnect" layoutX="250.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnCon" prefHeight="75.0" prefWidth="150.0" text="Connect" />
+      <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
+         <children>
+            <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" />
+            <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
+            <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="75.0" prefWidth="150.0" text="Send" />
+            <Button fx:id="btnDisconnect" layoutX="249.0" layoutY="325.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="150.0" text="Disconnect" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneConnect" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Button fx:id="btnConnect" layoutX="125.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnCon" prefHeight="75.0" prefWidth="150.0" text="Connect" />
+            <TextField fx:id="txtName" layoutX="107.0" layoutY="229.0" promptText="Enter" />
+            <TextField fx:id="txtPort" layoutX="107.0" layoutY="169.0" text="1111" />
+            <TextField fx:id="txtIP" layoutX="107.0" layoutY="105.0" text="localhost" />
+            <Label layoutX="169.0" layoutY="27.0" text="Welcome" />
+            <Label focusTraversable="false" layoutX="108.0" layoutY="84.0" text="IP Address:" />
+            <Label focusTraversable="false" layoutX="108.0" layoutY="148.0" text="Port:" />
+            <Label focusTraversable="false" layoutX="106.0" layoutY="208.0" text="Name:" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

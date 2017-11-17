@@ -14,7 +14,7 @@ public class clientSendRec
 	int port;
 	private String userName;
 	
-	public clientSendRec(String ip, int port, TextArea txtOut, String user, TextArea txtIn) throws UnknownHostException, IOException 
+	public clientSendRec(String ip, int port, String user, TextArea txtOut, TextArea txtIn) throws UnknownHostException, IOException 
 	{		
 		ServerPort = port;
 		serverIp = ip;
@@ -27,8 +27,10 @@ public class clientSendRec
 		in = new DataInputStream(socket.getInputStream());
 		out = new DataOutputStream(socket.getOutputStream());
 		
+		out.writeUTF(this.userName);
+		
 		// readMessage thread
-		Thread readMessage = new Thread(new Runnable() 
+		Thread read = new Thread(new Runnable() 
 		{
 			@Override
 			public void run() 
@@ -39,7 +41,7 @@ public class clientSendRec
 					{
 						// read the message sent to this client
 						String msg = in.readUTF();
-						txtOut.appendText("\n"+msg);
+						txtOut.appendText(msg+"\n");
 					} 
 				}
 				catch (IOException e)
@@ -49,7 +51,7 @@ public class clientSendRec
 			}
 		});
 		
-		readMessage.start();
+		read.start();
 	}
 	
 	public void sendMessage(String message)

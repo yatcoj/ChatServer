@@ -29,18 +29,24 @@ public class Server
 				//Accept incoming request to connect to server
 				clients = socket.accept();
 				
-				//Create client handler
-				System.out.println("A client has Connected: " + clients);
-				
 				//BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clients.getInputStream()));
 				DataInputStream inFromClient = new DataInputStream(clients.getInputStream());
 				DataOutputStream outToClient = new DataOutputStream(clients.getOutputStream());
 				
-				ClientHandler ch = new ClientHandler(clients, clientCount, inFromClient, outToClient);
+				String n = inFromClient.readUTF();
 				
+				//Create client handler
+				ClientHandler ch = new ClientHandler(clients, clientCount, n, inFromClient, outToClient);
+				
+				System.out.println(ch.getName() + " has Connected: " + clients);
 				
 				//add client to list
 				clientList.add(ch);
+				
+				for(ClientHandler all: Server.clientList)
+				{
+					all.out.writeUTF(ch.getName() + " has Connected: " + clients);
+				}
 				
 				//start new thread
 				Thread t = new Thread(ch);
@@ -62,13 +68,14 @@ class ClientHandler implements Runnable
 	private Socket client;
 	private String name;
 	private int clientID;
-	private final DataInputStream in;
-	private final DataOutputStream out;
+	public final DataInputStream in;
+	public final DataOutputStream out;
 	
-	public ClientHandler(Socket clients, int clientCount, DataInputStream read, DataOutputStream send) 
+	public ClientHandler(Socket clients, int clientCount, String n, DataInputStream read, DataOutputStream send) 
 	{
 		this.client = clients;
 		this.clientID = clientCount;
+		this.name = n;
 		this.in = read;
 		this.out = send;
 	}
@@ -80,6 +87,8 @@ class ClientHandler implements Runnable
 		{    	
 			while(true)
 	        {
+				//Put an if statement to check if want to disconnect
+				
 				String msg = in.readUTF();
 				System.out.println(msg);
 				
@@ -92,6 +101,7 @@ class ClientHandler implements Runnable
 	    catch(IOException e)
 	    {
 	        e.printStackTrace();
+	        System.out.println("this is an error");
 	    }
 	}
 	
