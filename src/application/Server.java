@@ -94,7 +94,7 @@ class ClientHandler implements Runnable
 				
 				for(ClientHandler all: Server.clientList)
 				{
-					all.out.writeUTF(msg);
+					all.out.writeUTF(this.name + ": " + msg);
 				}
 	        }
 	    }

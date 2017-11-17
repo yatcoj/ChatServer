@@ -58,7 +58,7 @@ public class clientSendRec
 	{
 		try
 		{
-			out.writeUTF(userName + "@"+message);
+			out.writeUTF(message);
 		}
 		catch(IOException e)
 		{
