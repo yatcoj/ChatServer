@@ -100,17 +100,19 @@ class ClientHandler implements Runnable
 				{
 					Server.clientList.remove(this);
 				}
+				
 				if(msg == "D!sc0nn3ct*")
 				{
 					run = false;
 					client.close();
 					Server.clientList.remove(this);
+					break;
 				}
 				else
 				{			
 					for(ClientHandler all: Server.clientList)
 					{
-						all.out.writeUTF(this.name + ": " + msg);
+						all.out.writeUTF(this.name + this.clientID + ": " + msg);
 					}
 				}
 	        }

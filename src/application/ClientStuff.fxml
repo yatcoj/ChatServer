@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ancChat" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
+<AnchorPane fx:id="ancChat" onKeyTyped="#keyPressed" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
    <children>
-      <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
+      <Pane fx:id="paneChat" layoutX="494.0" layoutY="202.0" prefHeight="400.0" prefWidth="400.0" visible="false">
          <children>
             <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" wrapText="true" />
             <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
-            <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="75.0" prefWidth="150.0" text="Send" />
-            <Button fx:id="btnDisconnect" layoutX="249.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnDiscon" prefHeight="75.0" prefWidth="150.0" text="Disconnect" />
+            <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="150.0" prefWidth="150.0" text="Send" />
          </children>
       </Pane>
-      <Pane fx:id="paneConnect" prefHeight="400.0" prefWidth="400.0">
+      <Pane fx:id="paneConnect" layoutX="494.0" layoutY="202.0" prefHeight="400.0" prefWidth="400.0">
          <children>
             <Button fx:id="btnConnect" layoutX="125.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnCon" prefHeight="75.0" prefWidth="150.0" text="Connect" />
             <TextField fx:id="txtName" layoutX="107.0" layoutY="229.0" promptText="Enter" />
@@ -27,5 +29,91 @@
             <Label focusTraversable="false" layoutX="106.0" layoutY="208.0" text="Name:" />
          </children>
       </Pane>
+      <AnchorPane fx:id="Background" layoutX="10.0" layoutY="10.0" onKeyPressed="#keyPressed" onKeyTyped="#keyPressed" prefHeight="780.0" prefWidth="1360.0" visible="false">
+         <children>
+            <ImageView fx:id="backGround" fitHeight="636.0" fitWidth="1373.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/backgnd.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="ground" fitHeight="367.0" fitWidth="1369.0" layoutX="-2.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/Gound.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="myMessage" alignment="CENTER" graphicTextGap="53.0" layoutX="393.0" layoutY="41.0" prefHeight="108.0" prefWidth="575.0" text="PC Tanks" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="53.0" />
+               </font>
+            </Label>
+            <ProgressBar fx:id="leftFuel" layoutX="85.0" layoutY="442.0" onKeyPressed="#keyPressed" prefWidth="200.0" progress="1.0" visible="false">
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ProgressBar>
+            <ProgressBar fx:id="rightFuel" layoutX="1026.0" layoutY="442.0" onKeyPressed="#keyPressed" prefWidth="200.0" progress="1.0" visible="false">
+               <effect>
+                  <SepiaTone />
+               </effect>
+            </ProgressBar>
+            <ImageView fx:id="tankLeft" fitHeight="64.0" fitWidth="132.0" layoutX="119.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/tank.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="tankRight" fitHeight="64.0" fitWidth="132.0" layoutX="1060.0" layoutY="353.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/tank.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnBack" layoutX="1126.0" layoutY="716.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="50.0" prefWidth="220.0" text="Back" visible="false" />
+            <Button fx:id="btnStart" layoutX="554.0" layoutY="465.0" mnemonicParsing="false" onAction="#clickMe" prefHeight="89.0" prefWidth="252.0" text="Start" visible="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnExit" layoutX="554.0" layoutY="596.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="89.0" prefWidth="252.0" text="Exit">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <ImageView fx:id="tankLeftCannon" fitHeight="18.0" fitWidth="56.0" layoutX="185.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/cannon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="tankRightCannon" fitHeight="18.0" fitWidth="56.0" layoutX="1070.0" layoutY="361.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/cannon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="fence" fitHeight="139.0" fitWidth="141.0" layoutX="611.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/fence.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="txt" layoutX="50.0" layoutY="443.0" text="Fuel" textFill="WHITE" />
+            <Label fx:id="txt2" layoutX="991.0" layoutY="443.0" text="Fuel" textFill="WHITE" visible="false" />
+            <ProgressBar fx:id="leftHealth" layoutX="85.0" layoutY="475.0" prefWidth="200.0" progress="1.0" visible="false">
+               <effect>
+                  <ColorAdjust brightness="0.02" hue="-0.51" />
+               </effect>
+            </ProgressBar>
+            <Label fx:id="txt1" layoutX="34.0" layoutY="476.0" text="Health" textFill="WHITE" />
+            <Label fx:id="txt3" layoutX="975.0" layoutY="476.0" text="Health" textFill="WHITE" visible="false" />
+            <ProgressBar fx:id="rightHealth" layoutX="1026.0" layoutY="475.0" prefWidth="200.0" progress="1.0" visible="false">
+               <effect>
+                  <ColorAdjust brightness="0.02" hue="-0.51" />
+               </effect>
+            </ProgressBar>
+            <ImageView fx:id="bulType" fitHeight="23.0" fitWidth="28.0" layoutX="13.0" layoutY="705.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/bullet.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="txt4" layoutX="13.0" layoutY="675.0" text="Bullet Type" textFill="WHITE" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="btntest" layoutX="123.0" layoutY="66.0" mnemonicParsing="false" onAction="#btnDiscon" text="Button" />
    </children>
 </AnchorPane>
