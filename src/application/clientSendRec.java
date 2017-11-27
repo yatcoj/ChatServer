@@ -13,6 +13,7 @@ public class clientSendRec
 	private String serverIp;
 	int port;
 	private String userName;
+	private Socket socket;
 	
 	public clientSendRec(String ip, int port, String user, TextArea txtOut, TextArea txtIn) throws UnknownHostException, IOException 
 	{		
@@ -21,7 +22,7 @@ public class clientSendRec
 		userName = user;
 		
 		// establish the connection
-		Socket socket = new Socket(serverIp, ServerPort);
+		socket = new Socket(serverIp, ServerPort);
 		  
 		// obtaining input and out streams
 		in = new DataInputStream(socket.getInputStream());
@@ -32,16 +33,25 @@ public class clientSendRec
 		// readMessage thread
 		Thread read = new Thread(new Runnable() 
 		{
+			boolean run = true;
 			@Override
 			public void run() 
 			{
 				try 
 				{
-					while (true)
+					while (run)
 					{
 						// read the message sent to this client
-						String msg = in.readUTF();
-						txtOut.appendText(msg+"\n");
+						try
+						{
+							String msg = in.readUTF();
+							txtOut.appendText(msg+"\n");
+						}
+						catch(SocketException e)
+						{
+							run = false;
+							System.out.println("Closing...");
+						}
 					} 
 				}
 				catch (IOException e)
@@ -59,6 +69,12 @@ public class clientSendRec
 		try
 		{
 			out.writeUTF(message);
+			if(message == "D!sc0nn3ct*")
+			{
+				in.close();
+				out.close();
+				socket.close();
+			}
 		}
 		catch(IOException e)
 		{

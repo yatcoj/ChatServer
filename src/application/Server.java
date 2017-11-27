@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,16 +86,32 @@ class ClientHandler implements Runnable
 	{
 		try
 		{    	
-			while(true)
+			boolean run = true;
+			while(run)
 	        {
+				String msg = "";
 				//Put an if statement to check if want to disconnect
-				
-				String msg = in.readUTF();
-				System.out.println(msg);
-				
-				for(ClientHandler all: Server.clientList)
+				try
 				{
-					all.out.writeUTF(this.name + ": " + msg);
+					msg = in.readUTF();
+					System.out.println(msg);
+				}
+				catch(SocketException e)
+				{
+					Server.clientList.remove(this);
+				}
+				if(msg == "D!sc0nn3ct*")
+				{
+					run = false;
+					client.close();
+					Server.clientList.remove(this);
+				}
+				else
+				{			
+					for(ClientHandler all: Server.clientList)
+					{
+						all.out.writeUTF(this.name + ": " + msg);
+					}
 				}
 	        }
 	    }

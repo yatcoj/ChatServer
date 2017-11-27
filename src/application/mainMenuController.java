@@ -2,6 +2,8 @@ package application;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -73,13 +75,9 @@ public class mainMenuController
 		paneChat.setDisable(false);		
 	}
 	
-	public TextArea getTextArea()
-	{
-		return txtOutput;
-	}
-	
 	public void btnDiscon() 
 	{
-		//Figure out how to disconnect sockets without crashing lul;
+		c1.sendMessage("D!sc0nn3ct*");
+		Platform.exit();
 	}
 }

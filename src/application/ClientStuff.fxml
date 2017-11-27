@@ -9,10 +9,10 @@
    <children>
       <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
          <children>
-            <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" />
+            <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" wrapText="true" />
             <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
             <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="75.0" prefWidth="150.0" text="Send" />
-            <Button fx:id="btnDisconnect" layoutX="249.0" layoutY="325.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="150.0" text="Disconnect" />
+            <Button fx:id="btnDisconnect" layoutX="249.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnDiscon" prefHeight="75.0" prefWidth="150.0" text="Disconnect" />
          </children>
       </Pane>
       <Pane fx:id="paneConnect" prefHeight="400.0" prefWidth="400.0">
