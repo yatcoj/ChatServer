@@ -1,5 +1,7 @@
 package games;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,7 +23,7 @@ import javafx.stage.Stage;
  * 
  * */
 
-public class TickTackToe extends Application 
+public class TickTackToe
 {
 	@FXML private GridPane board;
 	
@@ -30,19 +32,23 @@ public class TickTackToe extends Application
 	//The winner number, -1 if undecided, 0 if you, 1 if them
 	private int winner = -1;
 	
-	public static void main(String[] args)
-	{
-		launch();
-	}
-
-//	public TickTackToe(String opponent) 
+//	public static void main(String[] args)
 //	{
-//		this.opponent = opponent;
 //		launch();
 //	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception 
+	public TickTackToe(String opponent, Stage stage) 
+	{
+		this.opponent = opponent;
+		try {
+			start(stage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void start(Stage primaryStage) throws IOException
 	{
 		Parent root = FXMLLoader.load(getClass().getResource("TicTacToe.fxml"));
 		Scene scene = new Scene(root, 300, 300);

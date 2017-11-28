@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Timer;
 
+import games.TickTackToe;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
@@ -17,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -125,7 +130,58 @@ public class mainMenuController
 	
 	public void exitClicked()
 	{
-		Platform.exit();
+		//Made the BackButton an exit button
+
+				myMessage.setText("");
+				btnBack.setVisible(false);
+
+				btnStart.setVisible(true);
+				btnExit.setVisible(true);
+				
+				txt.setVisible(false);
+				txt1.setVisible(false);
+				txt2.setVisible(false);
+				txt3.setVisible(false);
+				txt4.setVisible(false);
+				ground.setVisible(false);
+				backGround.setVisible(false);
+				leftFuel.setVisible(false);
+				rightFuel.setVisible(false);
+				leftHealth.setVisible(false);
+				rightHealth.setVisible(false);
+				tankLeft.setVisible(false);
+				tankRight.setVisible(false);
+				tankLeftCannon.setVisible(false);
+				tankRightCannon.setVisible(false);
+				fence.setVisible(false);
+				bulType.setVisible(false);
+				
+				leftHealth.setProgress(1);
+				rightHealth.setProgress(1);
+				leftFuel.setProgress(1);
+				rightFuel.setProgress(1);
+				bolTurnLeft = true;
+				bulletType = 0;
+				
+				
+				
+				//Moves the tanks back to their orignal spots
+				tankLeft.setLayoutX(tkLS);
+				tankLeftCannon.setLayoutX(tkLCS);
+				tankRight.setLayoutX(tkRS);
+				tankRightCannon.setLayoutX(tkRCS);
+				tankLeftCannon.setRotate(0);
+				tankRightCannon.setRotate(0);
+				tankLeftCannon.setLayoutY(tkLCSY);
+				tankRightCannon.setLayoutY(tkRCSY);
+				key = 0;
+				key2 = 0;
+
+				if(boom != null)
+				{
+					boom.setVisible(false);
+				}
+				bulType.setImage(new Image("/TankPictures/bullet.png"));
 	}
 	
 	public void backClicked()
@@ -453,7 +509,7 @@ public class mainMenuController
 	
 	public void btnCon() throws UnknownHostException, IOException 
 	{
-		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput);
+		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn);
 		i++;
 		paneConnect.setVisible(false);
 		paneConnect.setDisable(true);
@@ -470,5 +526,159 @@ public class mainMenuController
 		paneConnect.setVisible(false);
 		paneChat.setVisible(false);
 		paneChat.setDisable(true);
+	}
+	
+	
+	//TicTacToe
+	@FXML private GridPane board;
+	@FXML private Label WhoWon;
+	@FXML private Label whosTurn;
+	
+	private String opponent = "";
+	//The winner number, -1 if undecided, 0 if you, 1 if them
+	private int winner = -1;
+	
+	public void setUpTic()
+	{
+		for (Node node : board.getChildren()) 
+		{
+            if (node instanceof Button) 
+            {
+            	if(!((Button) node).getText().equals("Exit"))
+            	{
+            		((Button) node).setText("");
+            	}
+            }
+		}
+		paneChat.setVisible(false);
+		paneChat.setDisable(true);
+
+		board.setVisible(true);
+		board.setDisable(false);
+		WhoWon.setText("");
+		whosTurn.setText("Your Turn");
+	}
+	
+	public void exitTic()
+	{
+		for (Node node : board.getChildren()) 
+		{
+            if (node instanceof Button) 
+            {
+            	if(!((Button) node).getText().equals("Exit"))
+            	{
+            		((Button) node).setText("");
+            	}
+            }
+		}
+		paneChat.setVisible(true);
+		paneChat.setDisable(false);
+		board.setVisible(false);
+		board.setDisable(true);
+
+		WhoWon.setText("");
+	}
+	
+	public void boardController(Event e)
+	{
+		
+		//if the button is not an x or an o and it is your turn and noone has won
+		if(!((Button)((Control) e.getSource())).getText().equals("X") 
+				&& !((Button)((Control) e.getSource())).getText().equals("O") 
+				&& whosTurn.getText().equals("Your Turn") 
+				&& WhoWon.getText().equals(""))
+		{
+			((Button)((Control) e.getSource())).setText("X");
+			//Send this
+			//((Button)((Control) e.getSource())).getId();
+			
+			whosTurn.setText("Their Turn");
+			c1.sendMessage("g@m3T" + ((Button)((Control) e.getSource())).getId());
+
+
+			if(checkForWin())
+			{
+
+				WhoWon.setText("You Won!");
+			}
+		}
+		
+	}
+
+	
+	
+	//returns true if someone won
+	private boolean checkForWin()
+	{
+		String[] sBoard = new String[9];
+		int x = 0;
+		//Get all the values and stick them into the sBoard array for processing
+		for (Node node : board.getChildren()) 
+		{
+            if (node instanceof Button && x<9) 
+            {
+            	sBoard[x] = ((Button) node).getText();
+            	x++;
+            }
+		}
+		
+		//Check all rows
+		for(int i = 0; i < 3; i++)
+		{
+			//if any of the rows are all x
+			if(sBoard[i*3].equals("X") && sBoard[i*3+1].equals("X") && sBoard[i*3+2].equals("X"))
+			{
+				winner = 0;
+				return true;
+			}
+			
+			//if any of the rows are all o
+			if(sBoard[i*3].equals("O") && sBoard[i*3+1].equals("O") && sBoard[i*3+2].equals("O"))
+			{
+				winner = 1;
+				return true;
+			}
+		}
+		
+		//Checks all columns
+		for(int i = 0; i < 3; i++)
+		{
+			//if any of the cols are all x
+			if(sBoard[i].equals("X") && sBoard[i+3].equals("X") && sBoard[i+6].equals("X"))
+			{
+				winner = 0;
+				return true;
+			}
+			
+			//if any of the cols are all o
+			if(sBoard[i].equals("O") && sBoard[i+3].equals("O") && sBoard[i+6].equals("O"))
+			{
+				winner = 1;
+				return true;
+			}
+		}
+		
+		//Checks the diagnals
+		if(sBoard[0].equals("X") && sBoard[4].equals("X") && sBoard[8].equals("X"))
+		{
+			winner = 0;
+			return true;
+		}
+		else if(sBoard[0].equals("O") && sBoard[4].equals("O") && sBoard[8].equals("O"))
+		{
+			winner = 1;
+			return true;
+		}
+		else if(sBoard[2].equals("X") && sBoard[4].equals("X") && sBoard[6].equals("X"))
+		{
+			winner = 0;
+			return true;
+		}
+		else if(sBoard[2].equals("O") && sBoard[4].equals("O") && sBoard[6].equals("O"))
+		{
+			winner = 1;
+			return true;
+		}
+		return false;
 	}
 }
