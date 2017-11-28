@@ -48,16 +48,16 @@
         <Label focusTraversable="false" layoutX="106.0" layoutY="208.0" text="Name:" />
       </children>
     </Pane>
-    <AnchorPane fx:id="Background" onKeyPressed="#keyPressed" onKeyTyped="#keyPressed" prefHeight="780.0" prefWidth="1360.0" visible="false">
+    <AnchorPane fx:id="Background" disable="false" onKeyPressed="#keyPressed" onKeyTyped="#keyPressed" prefHeight="780.0" prefWidth="1360.0" visible="false">
       <children>
         <ImageView fx:id="backGround" fitHeight="636.0" fitWidth="1373.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/backgnd.png" />
+            <Image url="@../TankPictures/backgnd.png" backgroundLoading="false" />
           </image>
         </ImageView>
         <ImageView fx:id="ground" fitHeight="367.0" fitWidth="1369.0" layoutX="-2.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/Gound.png" />
+            <Image url="@../TankPictures/Gound.png" />
           </image>
         </ImageView>
         <Label fx:id="myMessage" alignment="CENTER" graphicTextGap="53.0" layoutX="393.0" layoutY="41.0" prefHeight="108.0" prefWidth="575.0" text="PC Tanks" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
@@ -77,12 +77,12 @@
         </ProgressBar>
         <ImageView fx:id="tankLeft" fitHeight="64.0" fitWidth="132.0" layoutX="119.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/tank.png" />
+            <Image url="@../TankPictures/tank.png" />
           </image>
         </ImageView>
         <ImageView fx:id="tankRight" fitHeight="64.0" fitWidth="132.0" layoutX="1060.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/tank.png" />
+            <Image url="@../TankPictures/tank.png" />
           </image>
         </ImageView>
         <Button fx:id="btnBack" layoutX="1126.0" layoutY="716.0" mnemonicParsing="false" onAction="#backClicked" prefHeight="50.0" prefWidth="220.0" text="Back" visible="false" />
@@ -94,17 +94,17 @@
         <Button fx:id="btnExit" font="$x1" layoutX="554.0" layoutY="596.0" mnemonicParsing="false" onAction="#exitClicked" prefHeight="89.0" prefWidth="252.0" text="Exit" />
         <ImageView fx:id="tankLeftCannon" fitHeight="18.0" fitWidth="56.0" layoutX="185.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/cannon.png" />
+            <Image url="@../TankPictures/cannon.png" />
           </image>
         </ImageView>
         <ImageView fx:id="tankRightCannon" fitHeight="18.0" fitWidth="56.0" layoutX="1070.0" layoutY="361.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/cannon.png" />
+            <Image url="@../TankPictures/cannon.png" />
           </image>
         </ImageView>
         <ImageView fx:id="fence" fitHeight="139.0" fitWidth="141.0" layoutX="611.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/fence.png" />
+            <Image url="@../TankPictures/fence.png" />
           </image>
         </ImageView>
         <Label fx:id="txt" layoutX="50.0" layoutY="443.0" text="Fuel" textFill="WHITE" />
@@ -123,7 +123,7 @@
         </ProgressBar>
         <ImageView fx:id="bulType" fitHeight="23.0" fitWidth="28.0" layoutX="13.0" layoutY="705.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../../../../Desktop/Everything/Old/PocketTanksFinalFX/src/TankPictures/bullet.png" />
+            <Image url="@../TankPictures/bullet.png" />
           </image>
         </ImageView>
         <Label fx:id="txt4" layoutX="13.0" layoutY="675.0" text="Bullet Type" textFill="WHITE" />

@@ -126,6 +126,7 @@ public class mainMenuController
 			
 			firstRun = false;
 		}
+		
 	}
 	
 	public void exitClicked()
@@ -182,6 +183,12 @@ public class mainMenuController
 					boom.setVisible(false);
 				}
 				bulType.setImage(new Image("/TankPictures/bullet.png"));
+				
+				stage.setWidth(400);
+				stage.setHeight(400);
+				Background.setVisible(false);
+				paneChat.setVisible(true);
+				paneChat.setDisable(false);
 	}
 	
 	public void backClicked()
@@ -238,6 +245,12 @@ public class mainMenuController
 			boom.setVisible(false);
 		}
 		bulType.setImage(new Image("/TankPictures/bullet.png"));
+		
+		stage.setWidth(400);
+		stage.setHeight(400);
+		Background.setVisible(false);
+		paneChat.setVisible(true);
+		paneChat.setDisable(false);
 	}
 	
 	public void keyPressed()
@@ -520,7 +533,7 @@ public class mainMenuController
 	public void setUpGame() 
 	{
 		stage.setWidth(1360);
-		stage.setHeight(780);
+		stage.setHeight(800);
 		Background.setVisible(true);
 		paneConnect.setDisable(true);
 		paneConnect.setVisible(false);
