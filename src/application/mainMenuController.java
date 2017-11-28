@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 public class mainMenuController 
 {
+	@FXML private AnchorPane ancChat;
 	@FXML private TextArea txtOutput;
 	@FXML private TextArea txtInput;
 	
@@ -415,15 +416,15 @@ public class mainMenuController
 	}
 	
 	public static Pane root;
-	
+	private static Stage stage;
 	public void btnClientClicked() throws UnknownHostException, IOException 
 	{
 		try
 		{
 			root = (Pane)FXMLLoader.load(getClass().getResource("ClientStuff.fxml"));
-			Stage stage = new Stage();
+			stage = new Stage();
 			stage.setTitle("Client");
-			Scene scene = new Scene(root,1360,780);
+			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
@@ -460,12 +461,14 @@ public class mainMenuController
 		paneChat.setDisable(false);		
 	}
 	
-	public void btnDiscon() 
+	public void setUpGame() 
 	{
-		//c1.sendMessage("D!sc0nn3ct*");
-		//Platform.exit();
+		stage.setWidth(1360);
+		stage.setHeight(780);
 		Background.setVisible(true);
-		txtInput.setDisable(true);
-		txtOutput.setDisable(true);
+		paneConnect.setDisable(true);
+		paneConnect.setVisible(false);
+		paneChat.setVisible(false);
+		paneChat.setDisable(true);
 	}
 }

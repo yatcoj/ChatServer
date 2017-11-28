@@ -10,14 +10,15 @@
 
 <AnchorPane fx:id="ancChat" onKeyTyped="#keyPressed" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
    <children>
-      <Pane fx:id="paneChat" layoutX="494.0" layoutY="202.0" prefHeight="400.0" prefWidth="400.0" visible="false">
+      <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
          <children>
             <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" wrapText="true" />
             <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
             <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="150.0" prefWidth="150.0" text="Send" />
+            <Button fx:id="btntest" mnemonicParsing="false" onAction="#btnDiscon" text="Button" />
          </children>
       </Pane>
-      <Pane fx:id="paneConnect" layoutX="494.0" layoutY="202.0" prefHeight="400.0" prefWidth="400.0">
+      <Pane fx:id="paneConnect" prefHeight="400.0" prefWidth="400.0">
          <children>
             <Button fx:id="btnConnect" layoutX="125.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnCon" prefHeight="75.0" prefWidth="150.0" text="Connect" />
             <TextField fx:id="txtName" layoutX="107.0" layoutY="229.0" promptText="Enter" />
@@ -29,7 +30,7 @@
             <Label focusTraversable="false" layoutX="106.0" layoutY="208.0" text="Name:" />
          </children>
       </Pane>
-      <AnchorPane fx:id="Background" layoutX="10.0" layoutY="10.0" onKeyPressed="#keyPressed" onKeyTyped="#keyPressed" prefHeight="780.0" prefWidth="1360.0" visible="false">
+      <AnchorPane fx:id="Background" onKeyPressed="#keyPressed" onKeyTyped="#keyPressed" prefHeight="780.0" prefWidth="1360.0" visible="false">
          <children>
             <ImageView fx:id="backGround" fitHeight="636.0" fitWidth="1373.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
@@ -114,6 +115,5 @@
             <Label fx:id="txt4" layoutX="13.0" layoutY="675.0" text="Bullet Type" textFill="WHITE" />
          </children>
       </AnchorPane>
-      <Button fx:id="btntest" layoutX="123.0" layoutY="66.0" mnemonicParsing="false" onAction="#btnDiscon" text="Button" />
    </children>
 </AnchorPane>
