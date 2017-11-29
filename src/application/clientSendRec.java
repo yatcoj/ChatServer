@@ -6,6 +6,7 @@ import java.net.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -29,6 +30,9 @@ public class clientSendRec
 	private GridPane board;
 	private Label whoWon;
 	private Label whosTurn;
+	
+	//Paint
+	private GraphicsContext gc;
 	
 	//TANKS
 	private Boolean bolTurnLeft;
@@ -75,7 +79,7 @@ public class clientSendRec
 	private double tkRCSY;
 	public clientSendRec(String ip, int port, String user, 
 			TextArea txtOut, TextArea txtIn, GridPane board, 
-			Label whoWon, Label whosTurn, Boolean bolTurnLeft, Label myMessage, ProgressBar leftFuel,
+			Label whoWon, Label whosTurn, GraphicsContext gc, Boolean bolTurnLeft, Label myMessage, ProgressBar leftFuel,
 			ProgressBar rightFuel, ProgressBar leftHealth, ProgressBar rightHealth, Button btnStart,
 			Button btnExit, Button btnBack, ImageView tankLeft, ImageView tankRight, AnchorPane Background,
 			ImageView tankLeftCannon, ImageView tankRightCannon, ImageView fence, ImageView bulType,
@@ -90,6 +94,8 @@ public class clientSendRec
 		this.board = board;
 		this.whosTurn = whosTurn;
 		this.whoWon = whoWon;
+		
+		this.gc = gc;
 		
 		this.bolTurnLeft = bolTurnLeft;
 		this.myMessage = myMessage;
@@ -298,6 +304,43 @@ public class clientSendRec
 		return false;
 	}
 	
+	
+	//Paint
+	public void paintMe(String incoming)
+	{
+		 //c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
+		double x, y;
+		int rad = 30;
+
+		incoming = incoming.substring(incoming.indexOf("g@m3P"));		
+		incoming = incoming.replaceFirst("g@m3P", "");
+		x = Double.parseDouble(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		y = Double.parseDouble(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		System.out.println(incoming);
+		rad = Integer.parseInt(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		String color = incoming;
+		
+		rad *= 10;
+
+    	//gc.fillOval(40, 50, 30, 60);
+		gc.setFill(Color.RED);
+        gc.fillOval(x-rad/2 , y-rad/2, rad, rad);
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+
+		    }
+		});
+	}
 	
 	//Tanks
 	public void updateTanks(String incoming)

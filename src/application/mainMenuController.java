@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -24,6 +26,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+
 
 public class mainMenuController 
 {
@@ -88,6 +95,12 @@ public class mainMenuController
 	private double tkLCSY;
 	//same for right
 	private double tkRCSY;
+	
+	//Paint
+
+	Canvas canvas = new Canvas(1360,800);
+	GraphicsContext gc= canvas.getGraphicsContext2D();
+	
 	public void clickMe()
 	{
 		myMessage.setText("");
@@ -521,7 +534,7 @@ public class mainMenuController
 	
 	public void btnCon() throws UnknownHostException, IOException 
 	{
-		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn,
+		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn, gc,
 				bolTurnLeft, myMessage, leftFuel, rightFuel, leftHealth, rightHealth, btnStart, 
 				btnExit, btnBack, tankLeft, tankRight, Background, 
 				tankLeftCannon, tankRightCannon, fence, bulType, backGround, ground, txt, txt1,
