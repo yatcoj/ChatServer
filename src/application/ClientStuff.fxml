@@ -26,7 +26,7 @@
                 <MenuItem mnemonicParsing="false" text="Play" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="LastGameHere">
+            <Menu mnemonicParsing="false" onAction="#setUpPaint" text="Lets Paint">
               <items>
                 <MenuItem mnemonicParsing="false" text="Play" />
               </items>
@@ -36,7 +36,7 @@
         <Button fx:id="btnSend" layoutX="249.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnSendAct" prefHeight="150.0" prefWidth="150.0" text="Send" />
       </children>
     </Pane>
-    <Pane fx:id="paneConnect" prefHeight="400.0" prefWidth="400.0" visible="true">
+    <Pane fx:id="paneConnect" disable="false" focusTraversable="false" prefHeight="400.0" prefWidth="400.0" visible="true">
       <children>
         <Button fx:id="btnConnect" layoutX="125.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnCon" prefHeight="75.0" prefWidth="150.0" text="Connect" />
         <TextField fx:id="txtName" layoutX="107.0" layoutY="229.0" promptText="Enter" />
@@ -160,5 +160,10 @@
         <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
+    <BorderPane fx:id="msPS" disable="true" layoutX="0.0" layoutY="0.0" onKeyPressed="#exitPaint" onMouseDragged="#clickedPaints" onMousePressed="#clickedPaints" onScroll="#changeRad" prefHeight="782.4088134765625" prefWidth="1367.0" visible="false">
+      <bottom>
+        <Button mnemonicParsing="false" onAction="#exitPaint" text="Press Esc to Exit" />
+      </bottom>
+    </BorderPane>
   </children>
 </AnchorPane>

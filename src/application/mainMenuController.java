@@ -4,14 +4,13 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Timer;
 
-import games.TickTackToe;
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -20,9 +19,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class mainMenuController 
@@ -87,6 +90,13 @@ public class mainMenuController
 	private double tkLCSY;
 	//same for right
 	private double tkRCSY;
+	
+	
+	//Paint
+
+	Canvas canvas = new Canvas(1360,800);
+	GraphicsContext gc= canvas.getGraphicsContext2D();
+	
 	public void clickMe()
 	{
 		myMessage.setText("");
@@ -522,7 +532,7 @@ public class mainMenuController
 	
 	public void btnCon() throws UnknownHostException, IOException 
 	{
-		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn);
+		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn, gc);
 		i++;
 		paneConnect.setVisible(false);
 		paneConnect.setDisable(true);
@@ -541,6 +551,76 @@ public class mainMenuController
 		paneChat.setDisable(true);
 	}
 	
+	
+	//MsPaintSpoof
+	
+	@FXML private BorderPane msPS;
+	int rad = 30;
+	boolean firstRunPaint = true;
+	public void setUpPaint()
+	{
+		//canvas = new Canvas(1360,800);
+
+        //gc = canvas.getGraphicsContext2D();
+
+		if(firstRunPaint)
+		{
+			firstRunPaint = false;
+			msPS.getChildren().add(canvas);
+		}
+        
+        msPS.setVisible(true);
+        msPS.setDisable(false);
+        
+        stage.setWidth(1360);
+		stage.setHeight(800);
+		
+        paneConnect.setDisable(true);
+		paneConnect.setVisible(false);
+		paneChat.setVisible(false);
+		paneChat.setDisable(true);
+	}
+	
+	public void exitPaint()
+	{
+		msPS.setVisible(false);
+		msPS.setDisable(true);
+		
+		paneChat.setVisible(true);
+		paneChat.setDisable(false);
+		stage.setWidth(400);
+		stage.setHeight(400);
+	}
+	
+	
+	public void changeRad(ScrollEvent e)
+	{
+		if(rad < 10)
+		{
+			rad = 10;
+		}
+		if(e.getDeltaY() < 0)
+		{
+			if(rad < 100)
+			{
+				rad+=5;
+			}
+		}
+		else
+		{
+			if(rad -5 > 10 )
+			{
+				rad -= 5;
+			}
+		}
+	}
+	
+	public void clickedPaints(MouseEvent e)
+	{
+		gc.setFill(Color.RED);
+        gc.fillOval(e.getX()-rad/2 , e.getY()-rad/2, rad, rad);
+        c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
+	}
 	
 	//TicTacToe
 	@FXML private GridPane board;

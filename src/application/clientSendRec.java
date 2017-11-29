@@ -5,10 +5,12 @@ import java.net.*;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class clientSendRec
 {
@@ -25,7 +27,10 @@ public class clientSendRec
 	private Label whoWon;
 	private Label whosTurn;
 	
-	public clientSendRec(String ip, int port, String user, TextArea txtOut, TextArea txtIn, GridPane board, Label whoWon, Label whosTurn) throws UnknownHostException, IOException 
+	//Paint
+	private GraphicsContext gc;
+	
+	public clientSendRec(String ip, int port, String user, TextArea txtOut, TextArea txtIn, GridPane board, Label whoWon, Label whosTurn, GraphicsContext gc) throws UnknownHostException, IOException 
 	{		
 		ServerPort = port;
 		serverIp = ip;
@@ -34,6 +39,8 @@ public class clientSendRec
 		this.board = board;
 		this.whosTurn = whosTurn;
 		this.whoWon = whoWon;
+		
+		this.gc = gc;
 		
 		// establish the connection
 		socket = new Socket(serverIp, ServerPort);
@@ -64,6 +71,13 @@ public class clientSendRec
 							if(msg.contains("g@m3T") && !msg.contains(userName))
 							{
 								incomingMove(msg);
+							}
+							else if(msg.contains("g@m3P") && !msg.contains(userName))
+							{
+
+						       // c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
+								paintMe(msg);
+								
 							}
 							else if(!msg.contains("g@m3T"))
 							{
@@ -104,7 +118,7 @@ public class clientSendRec
 		{
 		}
 	}
-	
+	//TicTacToe
 	public void incomingMove(String incoming)
 	{
 		incoming = incoming.substring(incoming.length()-3);
@@ -200,4 +214,40 @@ public class clientSendRec
 		return false;
 	}
 
+	//Paint
+	public void paintMe(String incoming)
+	{
+		 //c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
+		double x, y;
+		int rad = 30;
+
+		incoming = incoming.substring(incoming.indexOf("g@m3P"));		
+		incoming = incoming.replaceFirst("g@m3P", "");
+		x = Double.parseDouble(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		y = Double.parseDouble(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		System.out.println(incoming);
+		rad = Integer.parseInt(incoming.substring(0, incoming.indexOf("/")-1));
+		
+		incoming = incoming.substring(incoming.indexOf("/"));
+		incoming = incoming.replaceFirst("/", "");
+		String color = incoming;
+		
+		rad *= 10;
+
+    	//gc.fillOval(40, 50, 30, 60);
+		gc.setFill(Color.RED);
+        gc.fillOval(x-rad/2 , y-rad/2, rad, rad);
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+
+		    }
+		});
+	}
 }
