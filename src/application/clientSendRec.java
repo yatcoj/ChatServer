@@ -360,189 +360,198 @@ public class clientSendRec
 	}
 	
 	//Tanks
+	String incoming1 = "";
 	public void updateTanks(String incoming)
 	{
-		incoming = incoming.substring(incoming.indexOf("g@m3K"));		
-		incoming = incoming.replaceFirst("g@m3K", "");		
-		if (bolTurnLeft) {
-			if (leftFuel.getProgress() > .1) {
-				switch(incoming)
-				{
-				//transfer all things over...make update on both ends...
-					case "A":
-						if (tankLeft.getLayoutX() >= 0) 
+		incoming1 = incoming;
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+		    	String incoming = incoming1;
+				incoming = incoming.substring(incoming.indexOf("g@m3K"));		
+				incoming = incoming.replaceFirst("g@m3K", "");		
+				if (bolTurnLeft) {
+					if (leftFuel.getProgress() > .1) {
+						switch(incoming)
 						{
-							tankLeft.setLayoutX(tankLeft.getLayoutX() - 10);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 10);
-							leftFuel.setProgress(leftFuel.getProgress() - .05);
+						//transfer all things over...make update on both ends...
+							case "A":
+								if (tankLeft.getLayoutX() >= 0) 
+								{
+									tankLeft.setLayoutX(tankLeft.getLayoutX() - 10);
+									tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 10);
+									leftFuel.setProgress(leftFuel.getProgress() - .05);
+								}
+								break;
+							case "F":
+								if (bulletType == 0) {
+									bulletType = 1;
+									bulType.setImage(new Image("/TankPictures/missile.png"));
+								} else {
+									bulletType = 0;
+		
+									bulType.setImage(new Image("/TankPictures/bullet.png"));
+								}
+								break;
+							case "D":
+								if (tankLeft.getLayoutX() <= 485) {
+		
+									tankLeft.setLayoutX(tankLeft.getLayoutX() + 10);
+									tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 10);
+									leftFuel.setProgress(leftFuel.getProgress() - .05);
+								}
+								break;
+							case "W":
+								if (tankLeftCannon.getRotate() > -59) {
+									tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
+		
+									tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() - 5);
+									tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 5);
+									key++;
+								}
+								break;
+							case "S":
+								if (tankLeftCannon.getRotate() < 0) {
+									tankLeftCannon.setRotate(tankLeftCannon.getRotate() + 20);
+		
+									tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() + 5);
+									tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);
+									key--;
+								}
+								break;
+							case " ":
+								bul.setVisible(true);
+								fire(100 + tankLeft.getLayoutX(), 340, 1);
+								movement(key, 0, 1);
+								
+		
+								bolTurnLeft = false;
+								leftFuel.setProgress(0);
+								rightFuel.setProgress(1);
+								if (setXLast - 500 == bul.getX()) {
+									if (tankRight.getLayoutX() < setXLast) {
+										rightHealth.setProgress(rightHealth.getProgress() - .3);
+									}
+								} else if (tankRight.getLayoutX() < setXLast
+										&& setXLast < tankRight.getLayoutX() + 200) {
+									rightHealth.setProgress(rightHealth.getProgress() - .3);
+								}
+								if (rightHealth.getProgress() <= 0) {
+									boom.setVisible(true);
+									boom.setX(tankRight.getLayoutX());
+									boom.setY(tankRight.getLayoutY() - 35);
+									boom.toFront();
+		
+									tankRight.setVisible(false);
+									tankRightCannon.setVisible(false);
+									rightFuel.setProgress(0);
+									rightHealth.setProgress(0);
+		
+									myMessage.setText("Player 1 Wins!");
+								}
+								break;
+							default:
+								break;
 						}
-						break;
-					case "F":
-						if (bulletType == 0) {
-							bulletType = 1;
-							bulType.setImage(new Image("/TankPictures/missile.png"));
-						} else {
-							bulletType = 0;
-
-							bulType.setImage(new Image("/TankPictures/bullet.png"));
-						}
-						break;
-					case "D":
-						if (tankLeft.getLayoutX() <= 485) {
-
-							tankLeft.setLayoutX(tankLeft.getLayoutX() + 10);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 10);
-							leftFuel.setProgress(leftFuel.getProgress() - .05);
-						}
-						break;
-					case "W":
-						if (tankLeftCannon.getRotate() > -59) {
-							tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
-
-							tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() - 5);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 5);
-							key++;
-						}
-						break;
-					case "S":
-						if (tankLeftCannon.getRotate() < 0) {
-							tankLeftCannon.setRotate(tankLeftCannon.getRotate() + 20);
-
-							tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() + 5);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);
-							key--;
-						}
-						break;
-					case " ":
-						bul.setVisible(true);
-						fire(100 + tankLeft.getLayoutX(), 340, 1);
-						movement(key, 0, 1);
-						
-
+					}
+					else {
 						bolTurnLeft = false;
 						leftFuel.setProgress(0);
 						rightFuel.setProgress(1);
-						if (setXLast - 500 == bul.getX()) {
-							if (tankRight.getLayoutX() < setXLast) {
-								rightHealth.setProgress(rightHealth.getProgress() - .3);
-							}
-						} else if (tankRight.getLayoutX() < setXLast
-								&& setXLast < tankRight.getLayoutX() + 200) {
-							rightHealth.setProgress(rightHealth.getProgress() - .3);
-						}
-						if (rightHealth.getProgress() <= 0) {
-							boom.setVisible(true);
-							boom.setX(tankRight.getLayoutX());
-							boom.setY(tankRight.getLayoutY() - 35);
-							boom.toFront();
-
-							tankRight.setVisible(false);
-							tankRightCannon.setVisible(false);
-							rightFuel.setProgress(0);
-							rightHealth.setProgress(0);
-
-							myMessage.setText("Player 1 Wins!");
-						}
-						break;
-					default:
-						break;
+					}
 				}
-			}
-			else {
-				bolTurnLeft = false;
-				leftFuel.setProgress(0);
-				rightFuel.setProgress(1);
-			}
-		}
-		else
-		{
-			if (rightFuel.getProgress() > .1) {
-				switch(incoming)
+				else
 				{
-					case "J":
-						if (tankRight.getLayoutX() > 750) {
-							tankRight.setLayoutX(tankRight.getLayoutX() - 10);
-			
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 10);
-							rightFuel.setProgress(rightFuel.getProgress() - .05);
+					if (rightFuel.getProgress() > .1) {
+						switch(incoming)
+						{
+							case "J":
+								if (tankRight.getLayoutX() > 750) {
+									tankRight.setLayoutX(tankRight.getLayoutX() - 10);
+					
+									tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 10);
+									rightFuel.setProgress(rightFuel.getProgress() - .05);
+								}
+								break;
+							case "F":
+								if (bulletType == 0) {
+									bulletType = 1;
+		
+									bulType.setImage(new Image("/TankPictures/missile.png"));
+								} else {
+									bulletType = 0;
+		
+									bulType.setImage(new Image("/TankPictures/bullet.png"));
+								}
+								break;
+							case "L":
+								if (tankRight.getLayoutX() < 1240) {
+									tankRight.setLayoutX(tankRight.getLayoutX() + 10);
+		
+									tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 10);
+									rightFuel.setProgress(rightFuel.getProgress() - .05);
+								}
+								break;
+							case "I":
+								if (tankRightCannon.getRotate() < 59) {
+									tankRightCannon.setRotate(tankRightCannon.getRotate() + 20);
+		
+									tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() - 5);
+									tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 5);
+									key2++;
+								}
+								break;
+							case "K":
+								if (tankRightCannon.getRotate() > 0) {
+									tankRightCannon.setRotate(tankRightCannon.getRotate() - 20);
+		
+									tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() + 5);
+									tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 5);
+									key2--;
+								}
+								break;
+							case " ":
+								bul.setVisible(true);
+								fire(50 + tankRight.getLayoutX(), 340, -1);
+								movement(key2, 1, -1);
+		
+								bolTurnLeft = true;
+								leftFuel.setProgress(1);
+								rightFuel.setProgress(0);
+								if (setXLast + 500 == bul.getX()) {
+									if (tankLeft.getLayoutX() > setXLast) {
+										leftHealth.setProgress(leftHealth.getProgress() - .3);
+									}
+								} else if (tankLeft.getLayoutX() < setXLast
+										&& setXLast < tankLeft.getLayoutX() + 200) {
+									leftHealth.setProgress(leftHealth.getProgress() - .3);
+								}
+								if (leftHealth.getProgress() <= 0) {
+									boom.setVisible(true);
+									boom.setX(tankLeft.getLayoutX());
+									boom.setY(tankLeft.getLayoutY() - 35);
+									boom.toFront();
+		
+									tankLeft.setVisible(false);
+									tankLeftCannon.setVisible(false);
+									leftFuel.setProgress(0);
+									leftHealth.setProgress(0);
+									myMessage.setText("Player 2 Wins!");
+								}
+								break;
+							default:
+								break;
 						}
-						break;
-					case "F":
-						if (bulletType == 0) {
-							bulletType = 1;
-
-							bulType.setImage(new Image("/TankPictures/missile.png"));
-						} else {
-							bulletType = 0;
-
-							bulType.setImage(new Image("/TankPictures/bullet.png"));
-						}
-						break;
-					case "L":
-						if (tankRight.getLayoutX() < 1240) {
-							tankRight.setLayoutX(tankRight.getLayoutX() + 10);
-
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 10);
-							rightFuel.setProgress(rightFuel.getProgress() - .05);
-						}
-						break;
-					case "I":
-						if (tankRightCannon.getRotate() < 59) {
-							tankRightCannon.setRotate(tankRightCannon.getRotate() + 20);
-
-							tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() - 5);
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 5);
-							key2++;
-						}
-						break;
-					case "K":
-						if (tankRightCannon.getRotate() > 0) {
-							tankRightCannon.setRotate(tankRightCannon.getRotate() - 20);
-
-							tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() + 5);
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 5);
-							key2--;
-						}
-						break;
-					case " ":
-						bul.setVisible(true);
-						fire(50 + tankRight.getLayoutX(), 340, -1);
-						movement(key2, 1, -1);
-
+					} 
+					else {
 						bolTurnLeft = true;
 						leftFuel.setProgress(1);
 						rightFuel.setProgress(0);
-						if (setXLast + 500 == bul.getX()) {
-							if (tankLeft.getLayoutX() > setXLast) {
-								leftHealth.setProgress(leftHealth.getProgress() - .3);
-							}
-						} else if (tankLeft.getLayoutX() < setXLast
-								&& setXLast < tankLeft.getLayoutX() + 200) {
-							leftHealth.setProgress(leftHealth.getProgress() - .3);
-						}
-						if (leftHealth.getProgress() <= 0) {
-							boom.setVisible(true);
-							boom.setX(tankLeft.getLayoutX());
-							boom.setY(tankLeft.getLayoutY() - 35);
-							boom.toFront();
-
-							tankLeft.setVisible(false);
-							tankLeftCannon.setVisible(false);
-							leftFuel.setProgress(0);
-							leftHealth.setProgress(0);
-							myMessage.setText("Player 2 Wins!");
-						}
-						break;
-					default:
-						break;
+					}
 				}
-			} 
-			else {
-				bolTurnLeft = true;
-				leftFuel.setProgress(1);
-				rightFuel.setProgress(0);
-			}
-		}
+
+		    }
+		});
 	}
 	
 	HashMap<Integer, Integer> angles1 = new HashMap<>();
