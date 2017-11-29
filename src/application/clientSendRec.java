@@ -346,7 +346,8 @@ public class clientSendRec
 	//Tanks
 	public void updateTanks(String incoming)
 	{
-		
+		incoming = incoming.substring(incoming.indexOf("g@m3TK"));		
+		incoming = incoming.replaceFirst("g@m3TK", "");
 	}
 
 }
