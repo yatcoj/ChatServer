@@ -177,8 +177,9 @@ public class clientSendRec
 								paintMe(msg);
 								
 							}
-							else if(!msg.contains("g@m3T"))
+							else if(!msg.contains("g@m3T") && !msg.contains("g@m3P"))
 							{
+								txtOut.appendText(msg+"\n");
 							}
 						}
 						catch(SocketException e)

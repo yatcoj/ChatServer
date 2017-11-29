@@ -519,6 +519,8 @@ public class mainMenuController {
 		paneConnect.setDisable(true);
 		paneChat.setVisible(true);
 		paneChat.setDisable(false);
+//		canvas.setDisable(true);
+//		canvas.setVisible(false);
 	}
 
 	//MsPaintSpoof
@@ -551,7 +553,7 @@ public class mainMenuController {
 	}
  	
  	public void exitPaint()
- {
+ 	{
  		msPS.setVisible(false);
  		msPS.setDisable(true);
  		
