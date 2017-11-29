@@ -2,14 +2,11 @@ package application;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.Timer;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -70,10 +67,6 @@ public class mainMenuController {
 	@FXML
 	private ProgressBar rightHealth;
 	@FXML
-	private Button btnStart;
-	@FXML
-	private Button btnExit;
-	@FXML
 	private Button btnBack;
 	@FXML
 	private ImageView tankLeft;
@@ -133,8 +126,7 @@ public class mainMenuController {
 	public void clickMe() {
 		myMessage.setText("");
 		bolTurnLeft = true;
-		btnStart.setVisible(false);
-		btnExit.setVisible(false);
+
 		btnBack.setVisible(true);
 
 		fence.setVisible(true);
@@ -170,72 +162,12 @@ public class mainMenuController {
 
 	}
 
-	public void exitClicked() {
-		// Made the BackButton an exit button
-
-		myMessage.setText("");
-		btnBack.setVisible(false);
-
-		btnStart.setVisible(true);
-		btnExit.setVisible(true);
-
-		txt.setVisible(false);
-		txt1.setVisible(false);
-		txt2.setVisible(false);
-		txt3.setVisible(false);
-		txt4.setVisible(false);
-		ground.setVisible(false);
-		backGround.setVisible(false);
-		leftFuel.setVisible(false);
-		rightFuel.setVisible(false);
-		leftHealth.setVisible(false);
-		rightHealth.setVisible(false);
-		tankLeft.setVisible(false);
-		tankRight.setVisible(false);
-		tankLeftCannon.setVisible(false);
-		tankRightCannon.setVisible(false);
-		fence.setVisible(false);
-		bulType.setVisible(false);
-
-		leftHealth.setProgress(1);
-		rightHealth.setProgress(1);
-		leftFuel.setProgress(1);
-		rightFuel.setProgress(1);
-		bolTurnLeft = true;
-		bulletType = 0;
-
-		// Moves the tanks back to their orignal spots
-		tankLeft.setLayoutX(tkLS);
-		tankLeftCannon.setLayoutX(tkLCS);
-		tankRight.setLayoutX(tkRS);
-		tankRightCannon.setLayoutX(tkRCS);
-		tankLeftCannon.setRotate(0);
-		tankRightCannon.setRotate(0);
-		tankLeftCannon.setLayoutY(tkLCSY);
-		tankRightCannon.setLayoutY(tkRCSY);
-		key = 0;
-		key2 = 0;
-
-		if (boom != null) {
-			boom.setVisible(false);
-		}
-		bulType.setImage(new Image("/TankPictures/bullet.png"));
-
-		stage.setWidth(400);
-		stage.setHeight(400);
-		Background.setVisible(false);
-		paneChat.setVisible(true);
-		paneChat.setDisable(false);
-	}
-
 	public void backClicked() {
 		// Made the BackButton an exit button
 
 		myMessage.setText("");
 		btnBack.setVisible(false);
 
-		btnStart.setVisible(true);
-		btnExit.setVisible(true);
 
 		txt.setVisible(false);
 		txt1.setVisible(false);
@@ -271,6 +203,7 @@ public class mainMenuController {
 		tankRightCannon.setRotate(0);
 		tankLeftCannon.setLayoutY(tkLCSY);
 		tankRightCannon.setLayoutY(tkRCSY);
+		
 		key = 0;
 		key2 = 0;
 
@@ -391,7 +324,7 @@ public class mainMenuController {
 	public void btnCon() throws UnknownHostException, IOException {
 		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput,
 				txtInput, board, WhoWon, whosTurn, gc, bolTurnLeft, myMessage, leftFuel, rightFuel, leftHealth,
-				rightHealth, btnStart, btnExit, btnBack, tankLeft, tankRight, Background, tankLeftCannon,
+				rightHealth, btnBack, tankLeft, tankRight, Background, tankLeftCannon,
 				tankRightCannon, fence, bulType, backGround, ground, txt, txt1, txt2, txt3, txt4, tkLS, tkRS, tkLCS,
 				tkRCS, tkLCSY, tkRCSY, boom, key, key2, bulletType, bul);
 		i++;
@@ -484,8 +417,6 @@ public class mainMenuController {
 		paneChat.setDisable(true);
 		myMessage.setText("");
 		bolTurnLeft = true;
-		btnStart.setVisible(false);
-		btnExit.setVisible(false);
 		btnBack.setVisible(true);
 
 		fence.setVisible(true);

@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
@@ -48,48 +47,21 @@ public class clientSendRec
 	private ProgressBar rightFuel;
 	private ProgressBar leftHealth;
 	private ProgressBar rightHealth;
-	private Button btnStart;
-	private Button btnExit;
-	private Button btnBack;
 	private ImageView tankLeft;
 	private ImageView tankRight;
-	private AnchorPane Background;
 	private ImageView tankLeftCannon;
 	private ImageView tankRightCannon;
-	private ImageView fence;
 	private ImageView bulType;
-	private ImageView backGround;
-	private ImageView ground;
 	private ImageView bul;
-	private Label txt;
-	private Label txt1;
-	private Label txt2;
-	private Label txt3;
-	private Label txt4;
-	
 	private ImageView boom= new ImageView(new Image("/TankPictures/boom.png"));;
 	private int key = 0;
 	private int key2 = 0;
 	private int bulletType = 0;
 	
-	private boolean firstRun = true;
-	//tankLeft x location at start
-	private double tkLS;
-	//same for right
-	private double tkRS;
-	//left tanks cannon x start
-	private double tkLCS;
-	//same for right
-	private double tkRCS;
-	//left tanks cannon y start
-	private double tkLCSY;
-	//same for right
-	private double tkRCSY;
 	public clientSendRec(String ip, int port, String user, 
 			TextArea txtOut, TextArea txtIn, GridPane board, 
 			Label whoWon, Label whosTurn, GraphicsContext gc, Boolean bolTurnLeft, Label myMessage, ProgressBar leftFuel,
-			ProgressBar rightFuel, ProgressBar leftHealth, ProgressBar rightHealth, Button btnStart,
-			Button btnExit, Button btnBack, ImageView tankLeft, ImageView tankRight, AnchorPane Background,
+			ProgressBar rightFuel, ProgressBar leftHealth, ProgressBar rightHealth, Button btnBack, ImageView tankLeft, ImageView tankRight, AnchorPane Background,
 			ImageView tankLeftCannon, ImageView tankRightCannon, ImageView fence, ImageView bulType,
 			ImageView backGround, ImageView ground, Label txt, Label txt1, Label txt2, Label txt3,
 			Label txt4, double tkLS, double tkRS, double tkLCS, double tkRCS, double tkLCSY, double tkRCSY, ImageView boom,
@@ -111,43 +83,17 @@ public class clientSendRec
 		this.rightFuel = rightFuel;
 		this.leftHealth = leftHealth;
 		this.rightHealth = rightHealth;
-		this.btnStart = btnStart;
-		this.btnExit = btnExit;
-		this.btnBack = btnBack;
 		this.tankLeft = tankLeft;
 		this.tankRight = tankRight;
-		this.Background = Background;
 		this.tankLeftCannon =tankLeftCannon;
 		this.tankRightCannon = tankRightCannon;
-		this.fence = fence;
 		this.bulType = bulType;
-		this.backGround = backGround;
-		this.ground = ground;
-		this.txt = txt;
-		this.txt1 = txt1;
-		this.txt2 = txt2;
-		this.txt3 = txt3;
-		this.txt4 = txt4;
 		this.bul = bul;
 		
 		this.boom= boom;
 		this.key = key;
 		this.key2 = key2;
 		this.bulletType = bulletType;
-		
-		//tankLeft x location at start
-		this.tkLS = tkLS;
-		//same for right
-		this.tkRS = tkRS;
-		//left tanks cannon x start
-		this.tkLCS = tkLCS;
-		//same for right
-		this.tkRCS = tkRCS;
-		//left tanks cannon y start
-		this.tkLCSY = tkLCSY;
-		//same for right
-		this.tkRCSY = tkRCSY;
-		
 		
 		// establish the connection
 		socket = new Socket(serverIp, ServerPort);
@@ -344,8 +290,6 @@ public class clientSendRec
 		
 		incoming = incoming.substring(incoming.indexOf("/"));
 		incoming = incoming.replaceFirst("/", "");
-		String color = incoming;
-		
 		rad *= 10;
 
     	//gc.fillOval(40, 50, 30, 60);
@@ -403,8 +347,9 @@ public class clientSendRec
 								break;
 							case "W":
 								if (tankLeftCannon.getRotate() > -59) {
+									System.out.println(tankLeftCannon.getRotate());
 									tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
-		
+									
 									tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() - 5);
 									tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 5);
 									key++;
@@ -578,11 +523,11 @@ public class clientSendRec
 	}
 	
 	private double setXLast;
-	public void movement(int key, int player, int direction)
+	public void movement(int key1, int player, int direction)
 	{
 		if(player == 0 &&  direction == 1)
 		{
-			switch (angles1.get(key))
+			switch (angles1.get(key1))
 			{
 			case 0:
 				Path path = new Path();
@@ -641,7 +586,7 @@ public class clientSendRec
 		}
 		if(player == 1 && direction == -1)
 		{
-			switch (angles2.get(key))
+			switch (angles2.get(key1))
 			{
 			case 0:
 				Path path = new Path();
@@ -701,6 +646,38 @@ public class clientSendRec
 				break;
 			}
 		}
-	
+		if(key== 1)
+		{
+			System.out.println("HERE");
+			tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);
+		}
+		else if(key == 2)
+		{
+			tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 10);
+		}
+		else if(key == 3)
+		{
+			tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 15);
+		}
+		
+		if(key2 == 1)
+		{
+			tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 5);
+		}
+		else if(key2 == 2)
+		{
+			tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 10);
+		}
+		else if(key2 == 3)
+		{
+			tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 15);
+		}
+		
+		key = 0;
+		key2 = 0;
+		tankLeftCannon.setRotate(0);
+		tankRightCannon.setRotate(0);
+		tankLeftCannon.setLayoutY(361);
+		tankRightCannon.setLayoutY(361);
 	}
 }
