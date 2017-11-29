@@ -170,12 +170,16 @@ public class clientSendRec
 							{
 								incomingMove(msg);
 							}
+							else if(msg.contains("g@m3P") && !msg.contains(userName))
+							{
+	 
+	 						    // c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
+								paintMe(msg);
+								
+							}
 							else if(!msg.contains("g@m3T"))
 							{
-								txtOut.appendText(msg+"\n");
 							}
-							
-							
 						}
 						catch(SocketException e)
 						{
