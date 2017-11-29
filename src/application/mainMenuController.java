@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Timer;
 
-import games.TickTackToe;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
