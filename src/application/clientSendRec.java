@@ -4,10 +4,15 @@ import java.io.*;
 import java.net.*;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 public class clientSendRec
@@ -25,7 +30,58 @@ public class clientSendRec
 	private Label whoWon;
 	private Label whosTurn;
 	
-	public clientSendRec(String ip, int port, String user, TextArea txtOut, TextArea txtIn, GridPane board, Label whoWon, Label whosTurn) throws UnknownHostException, IOException 
+	//TANKS
+	private Boolean bolTurnLeft;
+	Label myMessage;
+	private ProgressBar leftFuel;
+	private ProgressBar rightFuel;
+	private ProgressBar leftHealth;
+	private ProgressBar rightHealth;
+	private Button btnStart;
+	private Button btnExit;
+	private Button btnBack;
+	private ImageView tankLeft;
+	private ImageView tankRight;
+	private AnchorPane Background;
+	private ImageView tankLeftCannon;
+	private ImageView tankRightCannon;
+	private ImageView fence;
+	private ImageView bulType;
+	private ImageView backGround;
+	private ImageView ground;
+	private Label txt;
+	private Label txt1;
+	private Label txt2;
+	private Label txt3;
+	private Label txt4;
+	
+	private ImageView boom= new ImageView(new Image("/TankPictures/boom.png"));;
+	private int key = 0;
+	private int key2 = 0;
+	private int bulletType = 0;
+	
+	private boolean firstRun = true;
+	//tankLeft x location at start
+	private double tkLS;
+	//same for right
+	private double tkRS;
+	//left tanks cannon x start
+	private double tkLCS;
+	//same for right
+	private double tkRCS;
+	//left tanks cannon y start
+	private double tkLCSY;
+	//same for right
+	private double tkRCSY;
+	public clientSendRec(String ip, int port, String user, 
+			TextArea txtOut, TextArea txtIn, GridPane board, 
+			Label whoWon, Label whosTurn, Boolean bolTurnLeft, Label myMessage, ProgressBar leftFuel,
+			ProgressBar rightFuel, ProgressBar leftHealth, ProgressBar rightHealth, Button btnStart,
+			Button btnExit, Button btnBack, ImageView tankLeft, ImageView tankRight, AnchorPane Background,
+			ImageView tankLeftCannon, ImageView tankRightCannon, ImageView fence, ImageView bulType,
+			ImageView backGround, ImageView ground, Label txt, Label txt1, Label txt2, Label txt3,
+			Label txt4, double tkLS, double tkRS, double tkLCS, double tkRCS, double tkLCSY, double tkRCSY, ImageView boom,
+			int key, int key2, int bulletType) throws UnknownHostException, IOException 
 	{		
 		ServerPort = port;
 		serverIp = ip;
@@ -34,6 +90,48 @@ public class clientSendRec
 		this.board = board;
 		this.whosTurn = whosTurn;
 		this.whoWon = whoWon;
+		
+		this.bolTurnLeft = bolTurnLeft;
+		this.myMessage = myMessage;
+		this.leftFuel = leftFuel;
+		this.rightFuel = rightFuel;
+		this.leftHealth = leftHealth;
+		this.rightHealth = rightHealth;
+		this.btnStart = btnStart;
+		this.btnExit = btnExit;
+		this.btnBack = btnBack;
+		this.tankLeft = tankLeft;
+		this.tankRight = tankRight;
+		this.Background = Background;
+		this.tankLeftCannon =tankLeftCannon;
+		this.tankRightCannon = tankRightCannon;
+		this.fence = fence;
+		this.bulType = bulType;
+		this.backGround = backGround;
+		this.ground = ground;
+		this.txt = txt;
+		this.txt1 = txt1;
+		this.txt2 = txt2;
+		this.txt3 = txt3;
+		this.txt4 = txt4;
+		
+		this.boom= boom;
+		this.key = key;
+		this.key2 = key2;
+		this.bulletType = bulletType;
+		
+		//tankLeft x location at start
+		this.tkLS = tkLS;
+		//same for right
+		this.tkRS = tkRS;
+		//left tanks cannon x start
+		this.tkLCS = tkLCS;
+		//same for right
+		this.tkRCS = tkRCS;
+		//left tanks cannon y start
+		this.tkLCSY = tkLCSY;
+		//same for right
+		this.tkRCSY = tkRCSY;
 		
 		// establish the connection
 		socket = new Socket(serverIp, ServerPort);
@@ -67,9 +165,10 @@ public class clientSendRec
 							}
 							else if(!msg.contains("g@m3T"))
 							{
-
 								txtOut.appendText(msg+"\n");
 							}
+							
+							
 						}
 						catch(SocketException e)
 						{
@@ -105,6 +204,7 @@ public class clientSendRec
 		}
 	}
 	
+	//Tic tac toe
 	public void incomingMove(String incoming)
 	{
 		incoming = incoming.substring(incoming.length()-3);
@@ -130,8 +230,6 @@ public class clientSendRec
             	}
             }
 		}
-		
-		
 	}
 	
 	private boolean checkForWin()
@@ -198,6 +296,13 @@ public class clientSendRec
 			return true;
 		}
 		return false;
+	}
+	
+	
+	//Tanks
+	public void updateTanks(String incoming)
+	{
+		
 	}
 
 }

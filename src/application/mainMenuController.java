@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 public class mainMenuController 
 {
+	//Chat
 	@FXML private AnchorPane ancChat;
 	@FXML private TextArea txtOutput;
 	@FXML private TextArea txtInput;
@@ -43,7 +44,7 @@ public class mainMenuController
 	private clientSendRec c1;
 	static int i = 0;
 	
-	Timer time = new Timer();
+	//Tanks
 	private Boolean bolTurnLeft;
 	@FXML
 	Label myMessage;
@@ -163,8 +164,6 @@ public class mainMenuController
 				rightFuel.setProgress(1);
 				bolTurnLeft = true;
 				bulletType = 0;
-				
-				
 				
 				//Moves the tanks back to their orignal spots
 				tankLeft.setLayoutX(tkLS);
@@ -522,7 +521,11 @@ public class mainMenuController
 	
 	public void btnCon() throws UnknownHostException, IOException 
 	{
-		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn);
+		c1 = new clientSendRec(txtIP.getText(), Integer.parseInt(txtPort.getText()), txtName.getText(), txtOutput, txtInput, board, WhoWon, whosTurn,
+				bolTurnLeft, myMessage, leftFuel, rightFuel, leftHealth, rightHealth, btnStart, 
+				btnExit, btnBack, tankLeft, tankRight, Background, 
+				tankLeftCannon, tankRightCannon, fence, bulType, backGround, ground, txt, txt1,
+				txt2, txt3, txt4, tkLS, tkRS, tkLCS, tkRCS, tkLCSY, tkRCSY, boom, key, key2, bulletType);
 		i++;
 		paneConnect.setVisible(false);
 		paneConnect.setDisable(true);
@@ -530,7 +533,7 @@ public class mainMenuController
 		paneChat.setDisable(false);		
 	}
 	
-	public void setUpGame() 
+	public void setUpGameTank() 
 	{
 		stage.setWidth(1360);
 		stage.setHeight(800);
