@@ -59,7 +59,7 @@ public class mainMenuController {
 	static int i = 0;
 
 	// Tanks
-	private Boolean bolTurnLeft;
+	private Boolean bolTurnLeft = true;
 	@FXML
 	Label myMessage;
 	@FXML
@@ -288,87 +288,27 @@ public class mainMenuController {
 	public void keyPressed() {
 		// Updates the left tank
 		if (bolTurnLeft) {
-			if (leftFuel.getProgress() > 0) {
+			if (leftFuel.getProgress() > .1) {
 				tankLeft.setOnKeyPressed(e -> {
 					switch (e.getCode()) {
 
 					case A:
-						if (tankLeft.getLayoutX() >= 0) {
-							tankLeft.setLayoutX(tankLeft.getLayoutX() - 10);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 10);
-							leftFuel.setProgress(leftFuel.getProgress() - .05);
-						}
+						c1.sendMessage("g@m3K" + "A");
 						break;
 					case F:
-						if (bulletType == 0) {
-							bulletType = 1;
-							bulType.setImage(new Image("/TankPictures/missile.png"));
-						} else {
-							bulletType = 0;
-
-							bulType.setImage(new Image("/TankPictures/bullet.png"));
-						}
+						c1.sendMessage("g@m3K" + "F");
 						break;
 					case D:
-						if (tankLeft.getLayoutX() <= 485) {
-
-							tankLeft.setLayoutX(tankLeft.getLayoutX() + 10);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 10);
-							leftFuel.setProgress(leftFuel.getProgress() - .05);
-						}
+						c1.sendMessage("g@m3K" + "D");
 						break;
-					case Q:
-						if (tankLeftCannon.getRotate() > -59) {
-							tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
-
-							tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() - 5);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() - 5);
-							key++;
-						}
+					case W:
+						c1.sendMessage("g@m3K" + "W");
 						break;
-					case E:
-						if (tankLeftCannon.getRotate() < 0) {
-							tankLeftCannon.setRotate(tankLeftCannon.getRotate() + 20);
-
-							tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() + 5);
-							tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);
-							key--;
-						}
+					case S:
+						c1.sendMessage("g@m3K" + "S");
 						break;
 					case SPACE:
-						Projectile bul1;
-						if (bulletType == 0) {
-							bul1 = new Bullet(100 + tankLeft.getLayoutX(), tankLeft.getLayoutY(), 1);
-							bul1.movement(key, 0);
-						} else {
-							bul1 = new specBullet(100 + tankLeft.getLayoutX(), tankLeft.getLayoutY(), 1);
-							bul1.movement(key, 0);
-						}
-
-						bolTurnLeft = false;
-						leftFuel.setProgress(0);
-						rightFuel.setProgress(1);
-						if (bul1.getXLast() - 500 == bul1.getX()) {
-							if (tankRight.getLayoutX() < bul1.getXLast()) {
-								rightHealth.setProgress(rightHealth.getProgress() - .3);
-							}
-						} else if (tankRight.getLayoutX() < bul1.getXLast()
-								&& bul1.getXLast() < tankRight.getLayoutX() + 200) {
-							rightHealth.setProgress(rightHealth.getProgress() - .3);
-						}
-						if (rightHealth.getProgress() <= 0) {
-							boom.setVisible(true);
-							boom.setX(tankRight.getLayoutX());
-							boom.setY(tankRight.getLayoutY() - 35);
-							boom.toFront();
-
-							tankRight.setVisible(false);
-							tankRightCannon.setVisible(false);
-							rightFuel.setProgress(0);
-							rightHealth.setProgress(0);
-
-							myMessage.setText("Player 1 Wins!");
-						}
+						c1.sendMessage("g@m3K" + " ");
 						break;
 					default:
 						break;
@@ -382,88 +322,27 @@ public class mainMenuController {
 			}
 		} else {
 			// Updates the right tank
-			if (rightFuel.getProgress() > 0) {
+			if (rightFuel.getProgress() > .1) {
 				tankRight.setOnKeyPressed(e -> {
 					switch (e.getCode()) {
 
 					case J:
-						if (tankRight.getLayoutX() > 750) {
-							tankRight.setLayoutX(tankRight.getLayoutX() - 10);
-
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 10);
-							rightFuel.setProgress(rightFuel.getProgress() - .05);
-						}
+						c1.sendMessage("g@m3K" + "J");
 						break;
 					case F:
-						if (bulletType == 0) {
-							bulletType = 1;
-
-							bulType.setImage(new Image("/TankPictures/missile.png"));
-						} else {
-							bulletType = 0;
-
-							bulType.setImage(new Image("/TankPictures/bullet.png"));
-						}
+						c1.sendMessage("g@m3K" + "F");
 						break;
 					case L:
-						if (tankRight.getLayoutX() < 1240) {
-							tankRight.setLayoutX(tankRight.getLayoutX() + 10);
-
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 10);
-							rightFuel.setProgress(rightFuel.getProgress() - .05);
-						}
+						c1.sendMessage("g@m3K" + "L");
 						break;
-					case O:
-						if (tankRightCannon.getRotate() < 59) {
-							tankRightCannon.setRotate(tankRightCannon.getRotate() + 20);
-
-							tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() - 5);
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() + 5);
-							key2++;
-						}
+					case I:
+						c1.sendMessage("g@m3K" + "I");
 						break;
-					case U:
-						if (tankRightCannon.getRotate() > 0) {
-							tankRightCannon.setRotate(tankRightCannon.getRotate() - 20);
-
-							tankRightCannon.setLayoutY(tankRightCannon.getLayoutY() + 5);
-							tankRightCannon.setLayoutX(tankRightCannon.getLayoutX() - 5);
-							key2--;
-						}
+					case K:
+						c1.sendMessage("g@m3K" + "K");
 						break;
 					case SPACE:
-						Projectile bul;
-						if (bulletType == 0) {
-							bul = new Bullet(50 + tankRight.getLayoutX(), tankRight.getLayoutY(), -1);
-							bul.movement(key2, 1);
-						} else {
-							bul = new specBullet(50 + tankRight.getLayoutX(), tankRight.getLayoutY(), -1);
-							bul.movement(key2, 1);
-						}
-
-						bolTurnLeft = true;
-						leftFuel.setProgress(1);
-						rightFuel.setProgress(0);
-						if (bul.getXLast() + 500 == bul.getX()) {
-							if (tankLeft.getLayoutX() > bul.getXLast()) {
-								leftHealth.setProgress(leftHealth.getProgress() - .3);
-							}
-						} else if (tankLeft.getLayoutX() < bul.getXLast()
-								&& bul.getXLast() < tankLeft.getLayoutX() + 200) {
-							leftHealth.setProgress(leftHealth.getProgress() - .3);
-						}
-						if (leftHealth.getProgress() <= 0) {
-							boom.setVisible(true);
-							boom.setX(tankLeft.getLayoutX());
-							boom.setY(tankLeft.getLayoutY() - 35);
-							boom.toFront();
-
-							tankLeft.setVisible(false);
-							tankLeftCannon.setVisible(false);
-							leftFuel.setProgress(0);
-							leftHealth.setProgress(0);
-							myMessage.setText("Player 2 Wins!");
-						}
+						c1.sendMessage("g@m3K" + " ");
 						break;
 					default:
 						break;
@@ -590,10 +469,9 @@ public class mainMenuController {
  	{
  		gc.setFill(Color.RED);
         gc.fillOval(e.getX()-rad/2 , e.getY()-rad/2, rad, rad);
-        c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
  	}
  	
-	
+	//tanks
 	public void setUpGameTank() 
 	{
 		stage.setWidth(1360);
@@ -603,6 +481,43 @@ public class mainMenuController {
 		paneConnect.setVisible(false);
 		paneChat.setVisible(false);
 		paneChat.setDisable(true);
+		myMessage.setText("");
+		bolTurnLeft = true;
+		btnStart.setVisible(false);
+		btnExit.setVisible(false);
+		btnBack.setVisible(true);
+
+		fence.setVisible(true);
+		bulType.setVisible(true);
+		backGround.setVisible(true);
+		ground.setVisible(true);
+		txt.setVisible(true);
+		txt1.setVisible(true);
+		txt2.setVisible(true);
+		txt3.setVisible(true);
+		txt4.setVisible(true);
+		leftFuel.setVisible(true);
+		rightFuel.setVisible(true);
+		leftHealth.setVisible(true);
+		rightHealth.setVisible(true);
+		tankLeft.setVisible(true);
+		tankRight.setVisible(true);
+		tankLeftCannon.setVisible(true);
+		tankRightCannon.setVisible(true);
+		if (firstRun) {
+			tkLS = tankLeft.getLayoutX();
+			tkRS = tankRight.getLayoutX();
+			tkLCS = tankLeftCannon.getLayoutX();
+			tkRCS = tankRightCannon.getLayoutX();
+			tkLCSY = tankLeftCannon.getLayoutY();
+			tkRCSY = tankRightCannon.getLayoutY();
+
+			mainMenuController.root.getChildren().add(boom);
+			boom.setVisible(false);
+
+			firstRun = false;
+		}
+
 	}
 
 	// TicTacToe
