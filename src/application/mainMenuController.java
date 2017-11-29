@@ -61,7 +61,7 @@ public class mainMenuController {
 	// Tanks
 	private Boolean bolTurnLeft = true;
 	@FXML
-	Label myMessage;
+	private Label myMessage;
 	@FXML
 	private ProgressBar leftFuel;
 	@FXML
@@ -94,6 +94,8 @@ public class mainMenuController {
 	private ImageView backGround;
 	@FXML
 	private ImageView ground;
+	@FXML
+	private ImageView bul;
 	@FXML
 	private Label txt;
 	@FXML
@@ -392,7 +394,7 @@ public class mainMenuController {
 				txtInput, board, WhoWon, whosTurn, gc, bolTurnLeft, myMessage, leftFuel, rightFuel, leftHealth,
 				rightHealth, btnStart, btnExit, btnBack, tankLeft, tankRight, Background, tankLeftCannon,
 				tankRightCannon, fence, bulType, backGround, ground, txt, txt1, txt2, txt3, txt4, tkLS, tkRS, tkLCS,
-				tkRCS, tkLCSY, tkRCSY, boom, key, key2, bulletType);
+				tkRCS, tkLCSY, tkRCSY, boom, key, key2, bulletType, bul);
 		i++;
 		paneConnect.setVisible(false);
 		paneConnect.setDisable(true);

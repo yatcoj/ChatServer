@@ -20,7 +20,7 @@ public class specBullet extends Projectile
 	protected specBullet(double x, double y, int direction)
 	{
 		super(x, y, direction);
-		bul = new ImageView(new Image(imageLocation));
+		//bul = a;
 		bul.setX(x);
 		bul.setY(y);
 		this.direction = direction;

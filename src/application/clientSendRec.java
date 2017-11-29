@@ -2,7 +2,9 @@ package application;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 
+import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -16,6 +18,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurveTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.util.Duration;
 
 public class clientSendRec
 {
@@ -37,7 +43,7 @@ public class clientSendRec
 	
 	//TANKS
 	private Boolean bolTurnLeft;
-	Label myMessage;
+	private Label myMessage;
 	private ProgressBar leftFuel;
 	private ProgressBar rightFuel;
 	private ProgressBar leftHealth;
@@ -54,6 +60,7 @@ public class clientSendRec
 	private ImageView bulType;
 	private ImageView backGround;
 	private ImageView ground;
+	private ImageView bul;
 	private Label txt;
 	private Label txt1;
 	private Label txt2;
@@ -86,7 +93,7 @@ public class clientSendRec
 			ImageView tankLeftCannon, ImageView tankRightCannon, ImageView fence, ImageView bulType,
 			ImageView backGround, ImageView ground, Label txt, Label txt1, Label txt2, Label txt3,
 			Label txt4, double tkLS, double tkRS, double tkLCS, double tkRCS, double tkLCSY, double tkRCSY, ImageView boom,
-			int key, int key2, int bulletType) throws UnknownHostException, IOException 
+			int key, int key2, int bulletType, ImageView bul) throws UnknownHostException, IOException 
 	{		
 		ServerPort = port;
 		serverIp = ip;
@@ -121,6 +128,7 @@ public class clientSendRec
 		this.txt2 = txt2;
 		this.txt3 = txt3;
 		this.txt4 = txt4;
+		this.bul = bul;
 		
 		this.boom= boom;
 		this.key = key;
@@ -139,6 +147,7 @@ public class clientSendRec
 		this.tkLCSY = tkLCSY;
 		//same for right
 		this.tkRCSY = tkRCSY;
+		
 		
 		// establish the connection
 		socket = new Socket(serverIp, ServerPort);
@@ -405,24 +414,20 @@ public class clientSendRec
 						}
 						break;
 					case " ":
-						Projectile bul1;
-						if (bulletType == 0) {
-							bul1 = new Bullet(100 + tankLeft.getLayoutX(), tankLeft.getLayoutY(), 1);
-							bul1.movement(key, 0);
-						} else {
-							bul1 = new specBullet(100 + tankLeft.getLayoutX(), tankLeft.getLayoutY(), 1);
-							bul1.movement(key, 0);
-						}
+						bul.setVisible(true);
+						fire(100 + tankLeft.getLayoutX(), 340, 1);
+						movement(key, 0, 1);
+						
 
 						bolTurnLeft = false;
 						leftFuel.setProgress(0);
 						rightFuel.setProgress(1);
-						if (bul1.getXLast() - 500 == bul1.getX()) {
-							if (tankRight.getLayoutX() < bul1.getXLast()) {
+						if (setXLast - 500 == bul.getX()) {
+							if (tankRight.getLayoutX() < setXLast) {
 								rightHealth.setProgress(rightHealth.getProgress() - .3);
 							}
-						} else if (tankRight.getLayoutX() < bul1.getXLast()
-								&& bul1.getXLast() < tankRight.getLayoutX() + 200) {
+						} else if (tankRight.getLayoutX() < setXLast
+								&& setXLast < tankRight.getLayoutX() + 200) {
 							rightHealth.setProgress(rightHealth.getProgress() - .3);
 						}
 						if (rightHealth.getProgress() <= 0) {
@@ -500,24 +505,19 @@ public class clientSendRec
 						}
 						break;
 					case " ":
-						Projectile bul;
-						if (bulletType == 0) {
-							bul = new Bullet(50 + tankRight.getLayoutX(), tankRight.getLayoutY(), -1);
-							bul.movement(key2, 1);
-						} else {
-							bul = new specBullet(50 + tankRight.getLayoutX(), tankRight.getLayoutY(), -1);
-							bul.movement(key2, 1);
-						}
+						bul.setVisible(true);
+						fire(50 + tankRight.getLayoutX(), 340, -1);
+						movement(key2, 1, -1);
 
 						bolTurnLeft = true;
 						leftFuel.setProgress(1);
 						rightFuel.setProgress(0);
-						if (bul.getXLast() + 500 == bul.getX()) {
-							if (tankLeft.getLayoutX() > bul.getXLast()) {
+						if (setXLast + 500 == bul.getX()) {
+							if (tankLeft.getLayoutX() > setXLast) {
 								leftHealth.setProgress(leftHealth.getProgress() - .3);
 							}
-						} else if (tankLeft.getLayoutX() < bul.getXLast()
-								&& bul.getXLast() < tankLeft.getLayoutX() + 200) {
+						} else if (tankLeft.getLayoutX() < setXLast
+								&& setXLast < tankLeft.getLayoutX() + 200) {
 							leftHealth.setProgress(leftHealth.getProgress() - .3);
 						}
 						if (leftHealth.getProgress() <= 0) {
@@ -543,5 +543,155 @@ public class clientSendRec
 				rightFuel.setProgress(0);
 			}
 		}
+	}
+	
+	HashMap<Integer, Integer> angles1 = new HashMap<>();
+	HashMap<Integer, Integer> angles2 = new HashMap<>();
+	Boolean firstFire = true;
+	
+	public void fire(double x, double y, int direction)
+	{		
+		bul.setX(x);
+		bul.setY(y);
+		
+		if(firstFire)
+		{
+			angles1.put(0, 0);
+			angles1.put(1, 20);
+			angles1.put(2, 40);
+			angles1.put(3, 60);
+			angles2.put(0, 0);
+			angles2.put(1, 20);
+			angles2.put(2, 40);
+			angles2.put(3, 60);
+			firstFire = false;
+		}
+	}
+	
+	private double setXLast;
+	public void movement(int key, int player, int direction)
+	{
+		if(player == 0 &&  direction == 1)
+		{
+			switch (angles1.get(key))
+			{
+			case 0:
+				Path path = new Path();
+				path.getElements().add(new MoveTo(bul.getX(),bul.getY() + 20));
+				path.getElements().add(new CubicCurveTo(bul.getX() + 50, 360, bul.getX() + 400, 360, bul.getX() + 500, 400));
+				PathTransition pT = new PathTransition();
+				pT.setDuration(Duration.millis(1000));
+				pT.setPath(path);
+				pT.setNode(bul);
+				pT.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT.setCycleCount(1);
+				setXLast = bul.getX() + 500;
+				pT.play();
+				break;
+			case 20:
+				Path path1 = new Path();
+				path1.getElements().add(new MoveTo(bul.getX(),bul.getY()));
+				path1.getElements().add(new CubicCurveTo(bul.getX() + 70, 300 , bul.getX() + 400, 200, bul.getX() + 750, 400));
+				PathTransition pT1 = new PathTransition();
+				pT1.setDuration(Duration.millis(1000));
+				pT1.setPath(path1);
+				pT1.setNode(bul);
+				pT1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT1.setCycleCount(1);
+				setXLast = bul.getX() + 750;
+				pT1.play();
+				break;
+			case 40:
+				Path path2 = new Path();
+				path2.getElements().add(new MoveTo(bul.getX(),bul.getY()));
+				path2.getElements().add(new CubicCurveTo(bul.getX() + 50, 160, bul.getX() + 1000, 140, bul.getX() + 1050, 400));
+				PathTransition pT2 = new PathTransition();
+				pT2.setDuration(Duration.millis(1000));
+				pT2.setPath(path2);
+				pT2.setNode(bul);
+				pT2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT2.setCycleCount(1);
+				setXLast = bul.getX() + 1050;
+				pT2.play();
+				break;
+			case 60:
+				Path path3 = new Path();
+				path3.getElements().add(new MoveTo(bul.getX() - 20,bul.getY()));
+				path3.getElements().add(new CubicCurveTo(bul.getX() + 20, 50, bul.getX() + 1050, 80, bul.getX() + 1250, 400));
+				PathTransition pT3 = new PathTransition();
+				pT3.setDuration(Duration.millis(1000));
+				pT3.setPath(path3);
+				pT3.setNode(bul);
+				pT3.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT3.setCycleCount(1);
+
+				setXLast = bul.getX() + 1250;
+				pT3.play();
+				break;
+			}
+		}
+		if(player == 1 && direction == -1)
+		{
+			switch (angles2.get(key))
+			{
+			case 0:
+				Path path = new Path();
+				path.getElements().add(new MoveTo(bul.getX(),bul.getY() + 20));
+				path.getElements().add(new CubicCurveTo(bul.getX() - 50, 360, bul.getX() - 400, 360, bul.getX() - 500, 400));
+				PathTransition pT = new PathTransition();
+				pT.setDuration(Duration.millis(1000));
+				pT.setPath(path);
+				pT.setNode(bul);
+				pT.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT.setCycleCount(1);
+
+				setXLast = bul.getX() -500;
+				pT.play();
+				break;
+			case 20:
+				Path path1 = new Path();
+				path1.getElements().add(new MoveTo(bul.getX(),bul.getY()));
+				path1.getElements().add(new CubicCurveTo(bul.getX() - 70, 300 , bul.getX() - 400, 200, bul.getX() - 750, 400));
+				PathTransition pT1 = new PathTransition();
+				pT1.setDuration(Duration.millis(1000));
+				pT1.setPath(path1);
+				pT1.setNode(bul);
+				pT1.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT1.setCycleCount(1);
+
+				setXLast = bul.getX() -750;
+				pT1.play();
+				break;
+			case 40:
+				Path path2 = new Path();
+				path2.getElements().add(new MoveTo(bul.getX(),bul.getY()));
+				path2.getElements().add(new CubicCurveTo(bul.getX() - 50, 160, bul.getX() - 1000, 140, bul.getX() - 1050, 400));
+				PathTransition pT2 = new PathTransition();
+				pT2.setDuration(Duration.millis(1000));
+				pT2.setPath(path2);
+				pT2.setNode(bul);
+				pT2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT2.setCycleCount(1);
+
+				setXLast = bul.getX() - 1050;
+				pT2.play();
+				break;
+			case 60:
+				Path path3 = new Path();
+				path3.getElements().add(new MoveTo(bul.getX()+35,bul.getY()));
+				path3.getElements().add(new CubicCurveTo(bul.getX(), 100, bul.getX()-1200, 120, bul.getX() - 1150, 400));
+				PathTransition pT3 = new PathTransition();
+				pT3.setDuration(Duration.millis(1000));
+				pT3.setPath(path3);
+				pT3.setNode(bul);
+				pT3.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+				pT3.setCycleCount(1);
+
+				setXLast = bul.getX() - 1150;
+				pT3.play();
+				break;
+			}
+		}
+	
 	}
 }

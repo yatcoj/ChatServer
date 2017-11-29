@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="ancChat" onKeyTyped="#keyPressed" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.mainMenuController">
+<AnchorPane fx:id="ancChat" onKeyTyped="#keyPressed" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.mainMenuController">
   <children>
     <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
       <children>
@@ -52,7 +52,7 @@
       <children>
         <ImageView fx:id="backGround" fitHeight="636.0" fitWidth="1373.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
-            <Image url="@../TankPictures/backgnd.png" backgroundLoading="false" />
+            <Image backgroundLoading="false" url="@../TankPictures/backgnd.png" />
           </image>
         </ImageView>
         <ImageView fx:id="ground" fitHeight="367.0" fitWidth="1369.0" layoutX="-2.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -127,6 +127,11 @@
           </image>
         </ImageView>
         <Label fx:id="txt4" layoutX="13.0" layoutY="675.0" text="Bullet Type" textFill="WHITE" />
+            <ImageView fx:id="bul" fitHeight="23.0" fitWidth="28.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../TankPictures/bullet.png" />
+               </image>
+            </ImageView>
       </children>
     </AnchorPane>
     <GridPane fx:id="board" alignment="CENTER" disable="true" gridLinesVisible="true" layoutX="1.0" layoutY="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="-1.0" snapToPixel="true" visible="false">
