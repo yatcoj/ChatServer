@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -340,6 +341,7 @@ public class mainMenuController {
  	
  	@FXML private BorderPane msPS;
  	int rad = 30;
+ 	int pColor = 0;
  	boolean firstRunPaint = true;
  	public void setUpPaint()
  	{
@@ -349,6 +351,7 @@ public class mainMenuController {
  
  		if(firstRunPaint)
  		{
+ 			pColor = (new Random()).nextInt(7);
  			firstRunPaint = false;
  			msPS.getChildren().add(canvas);
  		}
@@ -401,7 +404,41 @@ public class mainMenuController {
  	
  	public void clickedPaints(MouseEvent e)
  	{
- 		gc.setFill(Color.RED);
+ 		String spColor = "RED";
+ 		Color col = Color.RED;
+ 		switch (pColor)
+ 		{
+ 			case 0: 
+ 				spColor = "RED";
+ 				col = Color.RED;
+ 				break;
+ 			case 1:
+ 				spColor = "GREEN";
+ 				col = Color.GREEN;
+ 				break;
+ 			case 2:
+ 				spColor = "BLUE";
+ 				col = Color.BLUE;
+ 				break;
+ 			case 3:
+ 				spColor = "YELLOW";
+ 				col = Color.YELLOW;
+ 				break;
+ 			case 4:
+ 				spColor = "WHITE";
+ 				col = Color.WHITE;
+ 				break;
+ 			case 5:
+ 				spColor = "BLACK";
+ 				col = Color.BLACK;
+ 				break;
+ 			case 6:
+ 				spColor = "GRAY";
+ 				col = Color.GRAY;
+ 				break;
+ 		}
+ 		c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ spColor);
+ 		gc.setFill(col);
         gc.fillOval(e.getX()-rad/2 , e.getY()-rad/2, rad, rad);
  	}
  	

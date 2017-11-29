@@ -285,7 +285,6 @@ public class clientSendRec
 		
 		incoming = incoming.substring(incoming.indexOf("/"));
 		incoming = incoming.replaceFirst("/", "");
-		System.out.println(incoming);
 		rad = Integer.parseInt(incoming.substring(0, incoming.indexOf("/")-1));
 		
 		incoming = incoming.substring(incoming.indexOf("/"));
@@ -293,7 +292,33 @@ public class clientSendRec
 		rad *= 10;
 
     	//gc.fillOval(40, 50, 30, 60);
-		gc.setFill(Color.RED);
+		Color col = Color.RED;
+		
+		switch (incoming)
+ 		{
+ 			case "RED": 
+ 				col = Color.RED;
+ 				break;
+ 			case "GREEN":
+ 				col = Color.GREEN;
+ 				break;
+ 			case "BLUE":	
+ 				col = Color.BLUE;
+ 				break;
+ 			case "YELLOW":
+ 				col = Color.YELLOW;
+ 				break;
+ 			case "WHITE":
+ 				col = Color.WHITE;
+ 				break;
+ 			case "BLACK":
+ 				col = Color.BLACK;
+ 				break;
+ 			case "GRAY":
+ 				col = Color.GRAY;
+ 				break;
+ 		}
+		gc.setFill(col);
         gc.fillOval(x-rad/2 , y-rad/2, rad, rad);
 		Platform.runLater(new Runnable() {
 		    @Override
