@@ -448,11 +448,13 @@ public class clientSendRec
 						rightFuel.setProgress(1);
 					}
 				}
+				//second player
 				else
 				{
 					if (rightFuel.getProgress() > .1) {
 						switch(incoming)
 						{
+							//move tank2 left
 							case "J":
 								if (tankRight.getLayoutX() > 750) {
 									tankRight.setLayoutX(tankRight.getLayoutX() - 10);
@@ -461,6 +463,7 @@ public class clientSendRec
 									rightFuel.setProgress(rightFuel.getProgress() - .05);
 								}
 								break;
+							//change bullet icon bottom right
 							case "F":
 								if (bulletType == 0) {
 									bulletType = 1;
@@ -472,6 +475,7 @@ public class clientSendRec
 									bulType.setImage(new Image("/TankPictures/bullet.png"));
 								}
 								break;
+							//move tank2 right
 							case "L":
 								if (tankRight.getLayoutX() < 1240) {
 									tankRight.setLayoutX(tankRight.getLayoutX() + 10);
@@ -480,6 +484,7 @@ public class clientSendRec
 									rightFuel.setProgress(rightFuel.getProgress() - .05);
 								}
 								break;
+							//change tank2 angle up
 							case "I":
 								if (tankRightCannon.getRotate() < 59) {
 									tankRightCannon.setRotate(tankRightCannon.getRotate() + 20);
@@ -489,6 +494,7 @@ public class clientSendRec
 									key2++;
 								}
 								break;
+							//change tank2 angle down
 							case "K":
 								if (tankRightCannon.getRotate() > 0) {
 									tankRightCannon.setRotate(tankRightCannon.getRotate() - 20);
@@ -498,6 +504,7 @@ public class clientSendRec
 									key2--;
 								}
 								break;
+							//fire
 							case " ":
 								bul.setVisible(true);
 								fire(50 + tankRight.getLayoutX(), 340, -1);
@@ -531,6 +538,7 @@ public class clientSendRec
 								break;
 						}
 					} 
+					//change turn
 					else {
 						bolTurnLeft = true;
 						leftFuel.setProgress(1);
@@ -542,10 +550,12 @@ public class clientSendRec
 		});
 	}
 	
+	//create angle maps
 	HashMap<Integer, Integer> angles1 = new HashMap<>();
 	HashMap<Integer, Integer> angles2 = new HashMap<>();
 	Boolean firstFire = true;
 	
+	//method to set up bullet
 	public void fire(double x, double y, int direction)
 	{		
 		bul.setX(x);
@@ -565,6 +575,7 @@ public class clientSendRec
 		}
 	}
 	
+	//methhod to animate bullet and check if hit
 	private double setXLast;
 	public void movement(int key1, int player, int direction)
 	{
@@ -689,6 +700,8 @@ public class clientSendRec
 				break;
 			}
 		}
+		
+		//resets cannon barrel to resting position
 		if(key== 1)
 		{
 			tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);

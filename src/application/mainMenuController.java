@@ -55,7 +55,7 @@ public class mainMenuController {
 	private clientSendRec c1;
 	static int i = 0;
 
-	// Tanks
+	// Tanks objects
 	private Boolean bolTurnLeft = true;
 	@FXML
 	private Label myMessage;
@@ -124,6 +124,7 @@ public class mainMenuController {
 	Canvas canvas = new Canvas(1360, 800);
 	GraphicsContext gc = canvas.getGraphicsContext2D();
 
+	//set up tank game initial
 	public void clickMe() {
 		myMessage.setText("");
 		bolTurnLeft = true;
@@ -163,6 +164,7 @@ public class mainMenuController {
 
 	}
 
+	//reset tank button
 	public void backClicked() {
 		// Made the BackButton an exit button
 
@@ -220,6 +222,7 @@ public class mainMenuController {
 		paneChat.setDisable(false);
 	}
 
+	//sends messages to server for tnak game
 	public void keyPressed() {
 		// Updates the left tank
 		if (bolTurnLeft) {
@@ -295,6 +298,7 @@ public class mainMenuController {
 	public static Pane root;
 	private static Stage stage;
 
+	//connect to server
 	public void btnClientClicked() throws UnknownHostException, IOException {
 		try {
 			root = (Pane) FXMLLoader.load(getClass().getResource("ClientStuff.fxml"));
@@ -309,6 +313,7 @@ public class mainMenuController {
 		}
 	}
 
+	//create server
 	public void btnServerClicked() {
 		int port = 1111;
 		Server serv = new Server(port);
