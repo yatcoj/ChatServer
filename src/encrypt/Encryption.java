@@ -9,7 +9,7 @@ import java.util.Random;
 public class Encryption 
 {
 	public static String allChar = "abcdefghijklmnopqrstuvwxyz1234567890`-=~_+!@#$%^&*()[]\\;',./{}|:\"<>? 	ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	public static String encrypt(String message)
+	public String encrypt(String message)
 	{
 		String encM = "";
 		String jumbChar = "";
@@ -33,7 +33,7 @@ public class Encryption
 	}
 	
 	//Should be just as easy as calling .decrypt(text); to decrypt
-	public static String decrypt(String message)
+	public String decrypt(String message)
 	{
 		String decMH = "";
 		String decM = "";
@@ -66,7 +66,7 @@ public class Encryption
 		return decM;
 	}
 	
-	private static String jumbleText(String allChar, Random r)
+	private String jumbleText(String allChar, Random r)
 	{
 		String jumbChar = "";
 		String allCharT = allChar;

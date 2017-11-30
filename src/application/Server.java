@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import encrypt.Encryption;
+
 public class Server 
 {
 	static int clientCount = 0;
@@ -35,7 +37,7 @@ public class Server
 				DataOutputStream outToClient = new DataOutputStream(clients.getOutputStream());
 				
 				String n = inFromClient.readUTF();
-				
+				n = (new Encryption()).decrypt(n);
 				//Create client handler
 				ClientHandler ch = new ClientHandler(clients, clientCount, n, inFromClient, outToClient);
 				
@@ -46,7 +48,7 @@ public class Server
 				
 				for(ClientHandler all: Server.clientList)
 				{
-					all.out.writeUTF(ch.getName() + " has Connected: " + clients);
+					all.out.writeUTF((new Encryption()).encrypt(ch.getName() + " has Connected: " + clients));
 				}
 				
 				//start new thread
@@ -94,6 +96,7 @@ class ClientHandler implements Runnable
 				try
 				{
 					msg = in.readUTF();
+					msg = (new Encryption()).decrypt(msg);
 					System.out.println(msg);
 				}
 				catch(SocketException e)
@@ -112,7 +115,7 @@ class ClientHandler implements Runnable
 				{			
 					for(ClientHandler all: Server.clientList)
 					{
-						all.out.writeUTF(this.name + this.clientID + ": " + msg);
+						all.out.writeUTF((new Encryption()).encrypt(this.name + ": " + msg));
 					}
 				}
 	        }

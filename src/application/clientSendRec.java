@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.HashMap;
 
+import encrypt.Encryption;
 import javafx.animation.PathTransition;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -102,7 +103,7 @@ public class clientSendRec
 		in = new DataInputStream(socket.getInputStream());
 		out = new DataOutputStream(socket.getOutputStream());
 		
-		out.writeUTF(this.userName);
+		out.writeUTF((new Encryption()).encrypt(this.userName));
 		
 		// readMessage thread
 		Thread read = new Thread(new Runnable() 
@@ -119,6 +120,8 @@ public class clientSendRec
 						try
 						{
 							String msg = in.readUTF();
+							msg = (new Encryption()).decrypt(msg);
+							
 							//If the incoming message contains gameT and does not contain this clients username, send it to tictactoe
 							if(msg.contains("g@m3T") && !msg.contains(userName))
 							{
@@ -160,6 +163,7 @@ public class clientSendRec
 	{
 		try
 		{
+			message = (new Encryption()).encrypt(message);
 			out.writeUTF(message);
 			if(message == "D!sc0nn3ct*")
 			{
