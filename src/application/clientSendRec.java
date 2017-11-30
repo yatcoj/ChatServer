@@ -376,7 +376,6 @@ public class clientSendRec
 								break;
 							case "W":
 								if (tankLeftCannon.getRotate() > -59) {
-									System.out.println(tankLeftCannon.getRotate());
 									tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
 									
 									tankLeftCannon.setLayoutY(tankLeftCannon.getLayoutY() - 5);
@@ -677,7 +676,6 @@ public class clientSendRec
 		}
 		if(key== 1)
 		{
-			System.out.println("HERE");
 			tankLeftCannon.setLayoutX(tankLeftCannon.getLayoutX() + 5);
 		}
 		else if(key == 2)

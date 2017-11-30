@@ -12,7 +12,7 @@
   <children>
     <Pane fx:id="paneChat" prefHeight="400.0" prefWidth="400.0" visible="false">
       <children>
-        <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" pickOnBounds="false" prefHeight="250.0" prefWidth="400.0" wrapText="true" />
+        <TextArea fx:id="txtOutput" editable="false" focusTraversable="false" layoutY="31.0" pickOnBounds="false" prefHeight="219.0" prefWidth="400.0" wrapText="true" />
         <TextArea fx:id="txtInput" layoutY="250.0" prefHeight="150.0" prefWidth="249.0" promptText="Enter" />
         <MenuBar layoutX="0.0" layoutY="0.0" prefWidth="400.0">
           <menus>
