@@ -59,6 +59,7 @@ public class clientSendRec
 	private int key2 = 0;
 	private int bulletType = 0;
 	
+	//Giant constructor to pass all the parameters we need to access in the mainController class
 	public clientSendRec(String ip, int port, String user, 
 			TextArea txtOut, TextArea txtIn, GridPane board, 
 			Label whoWon, Label whosTurn, GraphicsContext gc, Boolean bolTurnLeft, Label myMessage, ProgressBar leftFuel,
@@ -68,16 +69,20 @@ public class clientSendRec
 			Label txt4, double tkLS, double tkRS, double tkLCS, double tkRCS, double tkLCSY, double tkRCSY, ImageView boom,
 			int key, int key2, int bulletType, ImageView bul) throws UnknownHostException, IOException 
 	{		
+		//Socket stuff with username
 		ServerPort = port;
 		serverIp = ip;
 		userName = user;
 		
+		//tic tac toe
 		this.board = board;
 		this.whosTurn = whosTurn;
 		this.whoWon = whoWon;
 		
+		//paint
 		this.gc = gc;
 		
+		//tanks
 		this.bolTurnLeft = bolTurnLeft;
 		this.myMessage = myMessage;
 		this.leftFuel = leftFuel;
@@ -122,6 +127,7 @@ public class clientSendRec
 							String msg = in.readUTF();
 							msg = (new Encryption()).decrypt(msg);
 							
+							//checks for flags to see if message is for games
 							//If the incoming message contains gameT and does not contain this clients username, send it to tictactoe
 							if(msg.contains("g@m3T") && !msg.contains(userName))
 							{
@@ -129,8 +135,6 @@ public class clientSendRec
 							}
 							else if(msg.contains("g@m3P") && !msg.contains(userName))
 							{
-	 
-	 						    // c1.sendMessage("g@m3P" + e.getX() +"/" + e.getY() +"/" + rad +"/"+ "RED");
 								paintMe(msg);
 							}
 							else if(msg.contains("g@m3K"))
@@ -156,9 +160,11 @@ public class clientSendRec
 			}
 		});
 		
+		//Start thread
 		read.start();
 	}
 	
+	//Main method for sending data to server
 	public void sendMessage(String message)
 	{
 		try
@@ -340,14 +346,17 @@ public class clientSendRec
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
+		    	//Read message
 		    	String incoming = incoming1;
 				incoming = incoming.substring(incoming.indexOf("g@m3K"));		
-				incoming = incoming.replaceFirst("g@m3K", "");		
+				incoming = incoming.replaceFirst("g@m3K", "");	
+				//if player 1 turn
 				if (bolTurnLeft) {
+					//has fuel to move
 					if (leftFuel.getProgress() > .1) {
 						switch(incoming)
 						{
-						//transfer all things over...make update on both ends...
+							//move tank 1 left
 							case "A":
 								if (tankLeft.getLayoutX() >= 0) 
 								{
@@ -356,6 +365,7 @@ public class clientSendRec
 									leftFuel.setProgress(leftFuel.getProgress() - .05);
 								}
 								break;
+							//change bullet icon bottom right for fun
 							case "F":
 								if (bulletType == 0) {
 									bulletType = 1;
@@ -366,6 +376,7 @@ public class clientSendRec
 									bulType.setImage(new Image("/TankPictures/bullet.png"));
 								}
 								break;
+							//move tank 1 right
 							case "D":
 								if (tankLeft.getLayoutX() <= 485) {
 		
@@ -374,6 +385,7 @@ public class clientSendRec
 									leftFuel.setProgress(leftFuel.getProgress() - .05);
 								}
 								break;
+							//change tank 1 cannon angle up
 							case "W":
 								if (tankLeftCannon.getRotate() > -59) {
 									tankLeftCannon.setRotate(tankLeftCannon.getRotate() - 20);
@@ -383,6 +395,7 @@ public class clientSendRec
 									key++;
 								}
 								break;
+							//change tank 1 cannnon angle down
 							case "S":
 								if (tankLeftCannon.getRotate() < 0) {
 									tankLeftCannon.setRotate(tankLeftCannon.getRotate() + 20);
@@ -392,6 +405,7 @@ public class clientSendRec
 									key--;
 								}
 								break;
+							//fire cannon
 							case " ":
 								bul.setVisible(true);
 								fire(100 + tankLeft.getLayoutX(), 340, 1);
@@ -427,6 +441,7 @@ public class clientSendRec
 								break;
 						}
 					}
+					//change turns
 					else {
 						bolTurnLeft = false;
 						leftFuel.setProgress(0);
