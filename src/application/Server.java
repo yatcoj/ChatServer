@@ -51,7 +51,7 @@ public class Server
 					all.out.writeUTF((new Encryption()).encrypt(ch.getName() + " has Connected: " + clients));
 				}
 				
-				//start new thread
+				//start new thread; multi threading to handle multiple clients
 				Thread t = new Thread(ch);
 				t.start();
 				

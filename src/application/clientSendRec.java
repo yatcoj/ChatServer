@@ -110,7 +110,7 @@ public class clientSendRec
 		
 		out.writeUTF((new Encryption()).encrypt(this.userName));
 		
-		// readMessage thread
+		// readMessage thread; multi threading in order for all clients that connect to read
 		Thread read = new Thread(new Runnable() 
 		{
 			boolean run = true;
