@@ -338,8 +338,6 @@ public class mainMenuController {
 		paneConnect.setDisable(true);
 		paneChat.setVisible(true);
 		paneChat.setDisable(false);
-//		canvas.setDisable(true);
-//		canvas.setVisible(false);
 	}
 
 	//MsPaintSpoof
@@ -349,11 +347,7 @@ public class mainMenuController {
  	int pColor = 0;
  	boolean firstRunPaint = true;
  	public void setUpPaint()
- 	{
- 		//canvas = new Canvas(1360,800);
- 
-        //gc = canvas.getGraphicsContext2D();
- 
+ 	{ 
  		if(firstRunPaint)
  		{
  			pColor = (new Random()).nextInt(7);
